@@ -1,6 +1,6 @@
 *Sisällölliset sivut*
 
- - Etusivu:		/				Ei luotu
+ - Etusivu:		/				Mainittu app.py:ssä
  - Rekisteröinti:	/register			Ei luotu
  - Lista pelisaleista:	/lista				Ei luotu
  - Pelisalin sivu:	/lista/<salin nimi>		Ei luotu
@@ -21,7 +21,7 @@
 
 *.html-pohjat*
 
- - /			index.html                      Ei luotu
+ - /			index.html                      Tiedosto luotu
  - /register		register.html                   Ei luotu
  - /lista		lista.html                      Ei luotu
  - /lista/<salin nimi>	sali.html                       Ei luotu
