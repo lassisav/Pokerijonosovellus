@@ -14,3 +14,13 @@ db = SQLAlchemy(app)
 @app.route("/")
 def index():
 	return render_template("index.html")
+
+#Sisäänkirjautuminen: Uudelleenohjaussivu, joka käsittelee sisäänkirjautumisen
+@app.route("/login")
+def login():
+	return render_template("login.html")
+
+#Rekisteröityminen: Tällä sivulla käyttäjä syöttää tunnuksen ja salasanan rekisteröitymistä varten
+@app.route("/register")
+def register():
+	return render_template("register.html")
