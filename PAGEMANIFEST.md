@@ -1,39 +1,38 @@
 *Sisällölliset sivut*
 
-Sivun nimi:		Sivun osoite:			Sivun tila:
-Etusivu:		/				Ei luotu
-Rekisteröinti:		/register			Ei luotu
-Lista pelisaleista:	/lista				Ei luotu
-Pelisalin sivu:		/lista/<salin nimi>		Ei luotu
-Kontrollisivu:		/control			Ei luotu
-Ylläpitosivu:		/admin				Ei luotu
-Käyttäjän lisäys:	/admin/addUser			Ei luotu
-Käyttäjän poisto:	/admin/removeUser		Ei luotu
-Salin lisäys/poisto:	/admin/saliPoistaLisaa		Ei luotu
+ - Etusivu:		/				Ei luotu
+ - Rekisteröinti:	/register			Ei luotu
+ - Lista pelisaleista:	/lista				Ei luotu
+ - Pelisalin sivu:	/lista/<salin nimi>		Ei luotu
+ - Kontrollisivu:	/control			Ei luotu
+ - Ylläpitosivu:	/admin				Ei luotu
+ - Käyttäjän lisäys:	/admin/addUser			Ei luotu
+ - Käyttäjän poisto:	/admin/removeUser		Ei luotu
+ - Salin lisäys/poisto:	/admin/saliPoistaLisaa		Ei luotu
 
 *Redirect-sivut*
 
-Sisäänkirjautuminen:	/login				Ei luotu
-Pöytään liittyminen:	/join				Ei luotu
-Pöydän avaaminen:	/open				Ei luotu
-Pöydän sulkeminen:	/close				Ei luotu
-Jonosta saapuviin:	/next				Ei luotu
-Saapuvista pois:	/arrival			Ei luotu
+ - Sisäänkirjautuminen:	/login				Ei luotu
+ - Pöytään liittyminen:	/join				Ei luotu
+ - Pöydän avaaminen:	/open				Ei luotu
+ - Pöydän sulkeminen:	/close				Ei luotu
+ - Jonosta saapuviin:	/next				Ei luotu
+ - Saapuvista pois:	/arrival			Ei luotu
 
 *.html-pohjat*
 
-/			index.html                      Ei luotu
-/register		register.html                   Ei luotu
-/lista			lista.html                      Ei luotu
-/lista/<salin nimi>	sali.html                       Ei luotu
-/control		control.html                    Ei luotu
-/admin			admin.html                      Ei luotu
-/admin/addUser		addUser.html                    Ei luotu
-/admin/removeUser	removeUser.html			Ei luotu
-/admin/saliPoistaLisaa	saliPoistaLisaa.html		Ei luotu
-/login			login.html			Ei luotu
-/join			join.html			Ei luotu
-/open			open.html			Ei luotu
-/close			close.html			Ei luotu
-/next			next.html			Ei luotu
-/arrival		arrival.html			Ei luotu
+ - /			index.html                      Ei luotu
+ - /register		register.html                   Ei luotu
+ - /lista		lista.html                      Ei luotu
+ - /lista/<salin nimi>	sali.html                       Ei luotu
+ - /control		control.html                    Ei luotu
+ - /admin		admin.html                      Ei luotu
+ - /admin/addUser	addUser.html                    Ei luotu
+ - /admin/removeUser	removeUser.html			Ei luotu
+ - /admin/saliPoistaLisaa	saliPoistaLisaa.html		Ei luotu
+ - /login			login.html			Ei luotu
+ - /join			join.html			Ei luotu
+ - /open			open.html			Ei luotu
+ - /close			close.html			Ei luotu
+ - /next			next.html			Ei luotu
+ - /arrival		arrival.html			Ei luotu
