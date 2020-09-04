@@ -4,7 +4,7 @@
  - Sisäänkirjautuminen:	/login				Mainittu app.py:ssä
  - Rekisteröinti:	/register			Mainittu app.py:ssä
  - Lista pelisaleista:	/lista				Ei luotu
- - Pelisalin sivu:	/lista/<salin nimi>		Ei luotu
+ - Pelisalin sivu:	/lista/salin nimi		Ei luotu
  - Kontrollisivu:	/control			Ei luotu
  - Ylläpitosivu:	/admin				Ei luotu
  - Käyttäjän lisäys:	/admin/addUser			Ei luotu
@@ -18,6 +18,8 @@
  - Pöydän sulkeminen:	/close				Ei luotu
  - Jonosta saapuviin:	/next				Ei luotu
  - Saapuvista pois:	/arrival			Ei luotu
+ - Sisäänkirjautuminen:	/login/redirect			Ei luotu
+ - Uloskirjautuminen    /logout                         Ei luotu
 
 *.html-pohjat*
 

@@ -3,6 +3,20 @@ Sisäänkirjautuminen:
 Käytetään sisäänkirjautumiseen
 TODO: Tunnuksen ja salasanan syöttö
 -->
-Ei sulla mitään tiliä ole!
-<br>
-Rekisteröitymään siitä!
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<form action="/lista" method="POST">
+<input type="submit" value="Takaisin sivulle">
+</form>
+<form action="/logout" method="POST">
+<input type="submit" value="Kirjaudu ulos">
+</form>
+{% else %}
+<form action="/login/redirect" method="POST">
+<p>Käyttäjänimi:<br>
+<input type="text" name="username"></p>
+<p>Salasana:<br>
+<input type="password" name="password"></p>
+<input type="submit" value="Kirjaudu">
+</form>
+{% endif %}
