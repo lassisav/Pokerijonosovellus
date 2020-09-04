@@ -8,19 +8,17 @@ app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-#Etusivu: Etusivulta voi kirjautua sisään tai rekisteröityä.
-#TODO: Sisäänkirjautuminen
-#TODO: Rekisteröityminen
+#Etusivu: Etusivulta siirrytään sisäänkirjautumiseen tai rekisteröitymiseen.
 @app.route("/")
 def index():
 	return render_template("index.html")
 
-#Sisäänkirjautuminen: Uudelleenohjaussivu, joka käsittelee sisäänkirjautumisen
-@app.route("/login")
+#Sisäänkirjautuminen: Käytetään sisäänkirjautumiseen
+@app.route("/login", methods=["GET", "POST"])
 def login():
 	return render_template("login.html")
 
 #Rekisteröityminen: Tällä sivulla käyttäjä syöttää tunnuksen ja salasanan rekisteröitymistä varten
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
 	return render_template("register.html")

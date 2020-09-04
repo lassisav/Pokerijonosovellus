@@ -1,6 +1,7 @@
 *Sisällölliset sivut*
 
  - Etusivu:		/				Mainittu app.py:ssä
+ - Sisäänkirjautuminen:	/login				Mainittu app.py:ssä
  - Rekisteröinti:	/register			Mainittu app.py:ssä
  - Lista pelisaleista:	/lista				Ei luotu
  - Pelisalin sivu:	/lista/<salin nimi>		Ei luotu
@@ -12,7 +13,6 @@
 
 *Redirect-sivut*
 
- - Sisäänkirjautuminen:	/login				Mainittu app.py:ssä
  - Pöytään liittyminen:	/join				Ei luotu
  - Pöydän avaaminen:	/open				Ei luotu
  - Pöydän sulkeminen:	/close				Ei luotu
