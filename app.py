@@ -2,6 +2,7 @@ from flask import Flask
 from flask import redirect, render_template, request, session
 from os import getenv
 from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import check_password_hash, generate_password_hash
 
 app=Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL")
@@ -24,9 +25,26 @@ def login():
 def loginredirect():
 	username = request.form["username"]
 	password = request.form["password"]
-	# TODO: Tarkista tunnus ja salasana
-	session["username"] = username
-	return redirect("/lista")
+	sql = "SELECT pass FROM users WHERE name=:username"
+	result = db.session.execute(sql, {"username":username})
+	ps = result.fetchone()
+	if ps == None:
+		#Tunnusta ei ole
+		return redirect("/login/bad")
+	else:
+		hash_value = ps[0]
+		if check_password_hash(hash_value, password):
+			#Oikea tunnus ja salasana
+			session["username"] = username
+			return redirect("/lista")
+		else:
+			#Väärä salasana
+			return redirect("/login/bad")
+
+#login/bad: Kirjautuminen epäonnistui
+@app.route("/login/bad", methods=["POST"])
+def loginbad();
+	return render_template("loginbad.html")
 
 #logout: Toteuttaa uloskirjautumisen
 @app.route("/logout", methods=["POST"])
@@ -38,6 +56,33 @@ def logout():
 @app.route("/register", methods=["GET", "POST"])
 def register():
 	return render_template("register.html")
+
+#register/redirect: Toteuttaa rekisteröitymisen
+@app.route("/register/redirect", methods=["GET","POST"])
+def registerredirect():
+	reguser = request.form["reguser"]
+	regpass = request.form["regpass"]
+	sql1 = "SELECT name FROM users WHERE name=:reguser"
+	result = db.session.execute(sql1, {"reguser":reguser})
+	regu = result.fetchone()
+	if user == None:
+		hash_value = generate_password_hash(regpass)
+		sql2 = "INSERT INTO users(name,pass,created,status,perms) VALUES(:reguser,:password,LOCALTIMESTAMP,3,luser)"
+		db.session.execute(sql2, {"reguser":reguser,"password":hash_value})
+		db.session.commit();
+		return redirect("register/success")
+	else:
+		return redirect("/register/nametaken")
+
+#register/nametaken: Sivu, jonne käyttäjä ohjautuu yrittäessään rekisteröidä käytössä olevaa käyttäjänimeä
+@app.route("/register/nametaken", methods=["GET","POST"])
+def nametaken():
+	return render_template("nametaken.html")
+
+#register/success: Ilmoittaa käyttäjälle rekisteröinnin onnistumisesta
+@app.route("/register/success", methods=["GET","POST"])
+def registersuccess();
+	return render_template("registersuccess.html)"
 
 #Lista: Sisältää listan pelisaleista, klikkaamalla salia pääsee salin sivulle
 #TODO: Kaikki, sivu tällä hetkellä placeholder

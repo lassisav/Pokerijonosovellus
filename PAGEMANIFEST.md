@@ -1,40 +1,42 @@
 *Sisällölliset sivut*
 
- - Etusivu:		/				Mainittu app.py:ssä
- - Sisäänkirjautuminen:	/login				Mainittu app.py:ssä
- - Rekisteröinti:	/register			Mainittu app.py:ssä
- - Lista pelisaleista:	/lista				Ei luotu
- - Pelisalin sivu:	/lista/salin nimi		Ei luotu
- - Kontrollisivu:	/control			Ei luotu
- - Ylläpitosivu:	/admin				Ei luotu
- - Käyttäjän lisäys:	/admin/addUser			Ei luotu
- - Käyttäjän poisto:	/admin/removeUser		Ei luotu
- - Salin lisäys/poisto:	/admin/saliPoistaLisaa		Ei luotu
-
-*Redirect-sivut*
-
- - Pöytään liittyminen:	/join				Ei luotu
- - Pöydän avaaminen:	/open				Ei luotu
- - Pöydän sulkeminen:	/close				Ei luotu
- - Jonosta saapuviin:	/next				Ei luotu
- - Saapuvista pois:	/arrival			Ei luotu
- - Sisäänkirjautuminen:	/login/redirect			Ei luotu
- - Uloskirjautuminen    /logout                         Ei luotu
-
-*.html-pohjat*
-
- - /			index.html                      Tiedosto luotu
- - /register		register.html                   Tiedosto luotu
- - /lista		lista.html                      Ei luotu
- - /lista/<salin nimi>	sali.html                       Ei luotu
- - /control		control.html                    Ei luotu
- - /admin		admin.html                      Ei luotu
- - /admin/addUser	addUser.html                    Ei luotu
- - /admin/removeUser	removeUser.html			Ei luotu
- - /admin/saliPoistaLisaa	saliPoistaLisaa.html		Ei luotu
- - /login			login.html			Tiedosto luotu
- - /join			join.html			Ei luotu
- - /open			open.html			Ei luotu
- - /close			close.html			Ei luotu
- - /next			next.html			Ei luotu
- - /arrival		arrival.html			Ei luotu
+ - Etusivu:		/				Tehty, testattu  
+ - Sisäänkirjautuminen:	/login				Tehty, poislukien tyhjien kenttien esto, ei testattu  
+ - Rekisteröinti:	/register			Tehty, poislukien salasanan vahvistus -kentän toteutus, ei testattu  
+ - Lista pelisaleista:	/lista				Placeholder tehty  
+ - Pelisalin sivu:	/lista/salin nimi		Ei aloitettu  
+ - Kontrollisivu:	/control			Ei aloitettu  
+ - Ylläpitosivu:	/admin				Ei aloitettu  
+ - Käyttäjän lisäys:	/admin/addUser			Ei aloitettu  
+ - Käyttäjän poisto:	/admin/removeUser		Ei aloitettu  
+ - Salin lisäys/poisto:	/admin/saliPoistaLisaa		Ei aloitettu  
+ - Käyttäjänimi käytössä:	/register/nametaken	Tehty, ei testattu  
+ - Rekisteröinti onnistui:	/register/success	Tehty, ei testattu  
+ - Kirjautuminen epäonnistui:	/login/bad		Tehty, ei testattu  
+  
+*Redirect-sivut*  
+  
+ - Pöytään liittyminen:	/join				Ei aloitettu  
+ - Pöydän avaaminen:	/open				Ei aloitettu  
+ - Pöydän sulkeminen:	/close				Ei aloitettu  
+ - Jonosta saapuviin:	/next				Ei aloitettu  
+ - Saapuvista pois:	/arrival			Ei aloitettu  
+ - Sisäänkirjautuminen:	/login/redirect			Tehty, ei testattu  
+ - Uloskirjautuminen :   /logout                        Tehty, ei testattu, nykyisessä toteutuksessa ei linkkiä tai ohjausta tälle sivulle  
+ - Rekisteröityminen:	/register/redirect		Tehty, ei testattu  
+  
+*.html-pohjat*  
+  
+ - /			index.html                      Tehty, testattu  
+ - /register		register.html                   Tehty, ei testattu  
+ - /lista		lista.html                      Placeholder tehty  
+ - /lista/<salin nimi>	sali.html                       Ei aloitettu  
+ - /control		control.html                    Ei aloitettu  
+ - /admin		admin.html                      Ei aloitettu  
+ - /admin/addUser	addUser.html                    Ei aloitettu  
+ - /admin/removeUser	removeUser.html			Ei aloitettu  
+ - /admin/saliPoistaLisaa	saliPoistaLisaa.html	Ei aloitettu  
+ - /login			login.html		Tehty, ei testattu  
+ - /register/nametaken	nametaken.html			Tehty, ei testattu  
+ - /register/success	registersuccess.html		Tehty, ei testattu  
+ - /login/bad		loginbad.html			Tehty, ei testattu  

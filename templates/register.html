@@ -1,10 +1,21 @@
 <!--
 Rekisteröityminen:
 Tällä sivulla uusi käyttäjä luo tunnuksen
-TODO: Syötekentät: tunnus, salasana
-TODO: Lähetä-nappi
-TODO: Tunnuksen ja salasanan käsittely
 -->
-Kyllä sulla tili jo on!
-<br>
-Sisäänkirjautumaan siitä!
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+<form action="/lista" method="POST">
+<input type="submit" value="Takaisin sivulle">
+</form>
+<form action="/logout" method="POST">
+<input type="submit" value="Kirjaudu ulos">
+</form>
+{% else %}
+<h2>Rekisteröityminen</h2>
+<form action="/register/redirect" method="POST">
+<p>Käyttäjänimi:<br>
+<input type="text" name="reguser"></p>
+<p>Salasana:<br>
+<input type="text" name="regpass"></p>
+</form>
+{% endif %}
