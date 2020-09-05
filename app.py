@@ -11,7 +11,7 @@ app.secret_key = getenv("SECRET_KEY")
 db = SQLAlchemy(app)
 
 #Etusivu: Etusivulta siirrytään sisäänkirjautumiseen tai rekisteröitymiseen.
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
 	return render_template("index.html")
 
@@ -42,8 +42,8 @@ def loginredirect():
 			return redirect("/login/bad")
 
 #login/bad: Kirjautuminen epäonnistui
-@app.route("/login/bad", methods=["POST"])
-def loginbad();
+@app.route("/login/bad", methods=["POST", "GET"])
+def loginbad():
 	return render_template("loginbad.html")
 
 #logout: Toteuttaa uloskirjautumisen
@@ -65,12 +65,12 @@ def registerredirect():
 	sql1 = "SELECT name FROM users WHERE name=:reguser"
 	result = db.session.execute(sql1, {"reguser":reguser})
 	regu = result.fetchone()
-	if user == None:
+	if regu == None:
 		hash_value = generate_password_hash(regpass)
-		sql2 = "INSERT INTO users(name,pass,created,status,perms) VALUES(:reguser,:password,LOCALTIMESTAMP,3,luser)"
+		sql2 = "INSERT INTO users(name,pass,created,status,perms) VALUES(:reguser,:password,LOCALTIMESTAMP,3,'luser')"
 		db.session.execute(sql2, {"reguser":reguser,"password":hash_value})
 		db.session.commit();
-		return redirect("register/success")
+		return redirect("/register/success")
 	else:
 		return redirect("/register/nametaken")
 
@@ -81,8 +81,8 @@ def nametaken():
 
 #register/success: Ilmoittaa käyttäjälle rekisteröinnin onnistumisesta
 @app.route("/register/success", methods=["GET","POST"])
-def registersuccess();
-	return render_template("registersuccess.html)"
+def registersuccess():
+	return render_template("registersuccess.html")
 
 #Lista: Sisältää listan pelisaleista, klikkaamalla salia pääsee salin sivulle
 #TODO: Kaikki, sivu tällä hetkellä placeholder
