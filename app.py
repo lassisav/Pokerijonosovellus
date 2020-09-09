@@ -88,4 +88,11 @@ def registersuccess():
 #TODO: Kaikki, sivu tällä hetkellä placeholder
 @app.route("/lista", methods=["GET","POST"])
 def lista():
-	return render_template("lista.html")
+	saliote = db.session.execute("SELECT name FROM locations")
+	salit = saliote.fetchall()
+	return render_template("lista.html", salit=salit)
+
+#Salisivu: Näyttää käyttäjälle salissa olevat pöydät, käyttäjä voi tästä liittyä pöydän jonoon
+@app.route("/lista/<string:salinnimi>", methods =["GET","POST"])
+def salinnimi(salinnimi):
+	return render_template("salinnimi.html", salinnimi=salinnimi)

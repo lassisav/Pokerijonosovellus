@@ -3,8 +3,8 @@
  - Etusivu:		/				Tehty, testattu  
  - Sisäänkirjautuminen:	/login				Tehty, poislukien tyhjien kenttien esto, testattu  
  - Rekisteröinti:	/register			Tehty, poislukien salasanan vahvistus -kentän toteutus, testattu  
- - Lista pelisaleista:	/lista				Placeholder tehty  
- - Pelisalin sivu:	/lista/salin nimi		Ei aloitettu  
+ - Lista pelisaleista:	/lista				Esiversio tehty ja testattu, joitakin suuniteltuja ominaisuuksia puuttuu
+ - Pelisalin sivu:	/lista/<salinnimi>		Placeholder tehty
  - Kontrollisivu:	/control			Ei aloitettu  
  - Ylläpitosivu:	/admin				Ei aloitettu  
  - Käyttäjän lisäys:	/admin/addUser			Ei aloitettu  
@@ -29,8 +29,8 @@
   
  - /			index.html                      Tehty, testattu  
  - /register		register.html                   Tehty, testattu  
- - /lista		lista.html                      Placeholder tehty  
- - /lista/<salin nimi>	sali.html                       Ei aloitettu  
+ - /lista		lista.html                      Esiversio tehty ja testattu, joitakin suunniteltuja ominaisuuksia puuttuu  
+ - /lista/<salinnimi>	salinnimi.html                  Placeholder tehty  
  - /control		control.html                    Ei aloitettu  
  - /admin		admin.html                      Ei aloitettu  
  - /admin/addUser	addUser.html                    Ei aloitettu  
