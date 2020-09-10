@@ -95,4 +95,15 @@ def lista():
 #Salisivu: Näyttää käyttäjälle salissa olevat pöydät, käyttäjä voi tästä liittyä pöydän jonoon
 @app.route("/lista/<string:salinnimi>", methods =["GET","POST"])
 def salinnimi(salinnimi):
-	return render_template("salinnimi.html", salinnimi=salinnimi)
+	sql = "SELECT id FROM locations WHERE name=:salinnimi"
+	result = db.session.execute(sql, {"salinnimi":salinnimi}).fetchone()
+	salid = result[0]
+	sql2 = "SELECT * FROM tables WHERE location_id=:salid"
+	resu2 = db.session.execute(sql2, {"salid":salid})
+	poytalista = resu2.fetchall()
+	return render_template("salinnimi.html", salinnimi=salinnimi, poytalista=poytalista)
+
+#lista/table_id: Toteuttaa liittymisen
+@app.route("/lista/poyta/<string:tableid>", methods =["GET","POST"])
+def tableid(tableid):
+	return render_template("tableid.html")
