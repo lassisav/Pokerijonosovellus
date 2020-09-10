@@ -4,6 +4,12 @@
 
 **Pokerijonosovellus**
 
+*Sovelluksen tarkoitus*
+
+ - Sovelluksella hallinoidaan pokeripöytien, jotka on jaoiteltu toimipisteittäin (kutsutaan pelisaleiksi), pelaajatilannetta, jonotusta ja jonosta pöytään siirtymistä
+ - Käyttäjälle sovellus näyttää pöytätilanteet pelisaleittain. Käyttäjä voi sovelluksen kautta liittyä pöytään/jonoon
+ - Työntekijä pitää sovelluksen avulla kirjaa pöytätilanteista, siirtää käyttäjiä jonosta pöytään, sekä voi lisätä ja poistaa pöytiä
+
 *Sovelluksen sisältö*
 
  - Sovellus näyttää käyttäjille pöytien jonotustilanteen, joko vapaiden paikkojen määrän tai jonon pituuden
