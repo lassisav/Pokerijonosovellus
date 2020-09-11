@@ -104,6 +104,20 @@ def salinnimi(salinnimi):
 	return render_template("salinnimi.html", salinnimi=salinnimi, poytalista=poytalista)
 
 #lista/table_id: Toteuttaa liittymisen
+#TODO Tarkistus, onko käyttäjä jo jonossa ko. pöytään
 @app.route("/lista/poyta/<string:tableid>", methods =["GET","POST"])
 def tableid(tableid):
-	return render_template("tableid.html")
+	name = session.get("username")
+	sql = "SELECT id FROM users WHERE name=:name"
+	result = db.session.execute(sql, {"name":name}).fetchone()
+	userid = result[0]
+	sql2 = "INSERT INTO queue(user_id,table_id,inqueue,arrived) VALUES(:userid,:tableid,TRUE,LOCALTIMESTAMP)"
+	db.session.execute(sql2, {"userid":userid,"tableid":tableid})
+	db.session.commit();
+	sql3 = "SELECT COUNT(*) FROM queue WHERE table_id=:tableid AND inqueue=TRUE"
+	result = db.session.execute(sql3, {"tableid":tableid}).fetchone()
+	place = result[0]
+	sql4 = "SELECT name FROM tables WHERE id=:tableid"
+	result = db.session.execute(sql4, {"tableid":tableid}).fetchone()
+	tablename = result[0]
+	return render_template("tableid.html", name=name, tablename=tablename, place=place)
