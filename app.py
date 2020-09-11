@@ -62,6 +62,8 @@ def register():
 def registerredirect():
 	reguser = request.form["reguser"]
 	regpass = request.form["regpass"]
+	if not reguser or not regpass:
+		return redirect("/register/emptyfield")
 	sql1 = "SELECT name FROM users WHERE name=:reguser"
 	result = db.session.execute(sql1, {"reguser":reguser})
 	regu = result.fetchone()
@@ -78,6 +80,11 @@ def registerredirect():
 @app.route("/register/nametaken", methods=["GET","POST"])
 def nametaken():
 	return render_template("nametaken.html")
+
+#register/emptyfield: Sivu, jonne käyttäjä ohjautuu jos käyttäjänimi tai salasana-kenttä on tyhjä
+@app.route("/register/emptyfield")
+def emptyfield():
+	return render_template("emptyfield.html")
 
 #register/success: Ilmoittaa käyttäjälle rekisteröinnin onnistumisesta
 @app.route("/register/success", methods=["GET","POST"])

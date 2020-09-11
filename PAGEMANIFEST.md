@@ -1,7 +1,7 @@
 *Sisällölliset sivut*
 
  - Etusivu:		/				Tehty, testattu  
- - Sisäänkirjautuminen:	/login				Tehty, poislukien tyhjien kenttien esto, testattu  
+ - Sisäänkirjautuminen:	/login				Tehty, testattu  
  - Rekisteröinti:	/register			Tehty, poislukien salasanan vahvistus -kentän toteutus, testattu  
  - Lista pelisaleista:	/lista				Esiversio tehty ja testattu, joitakin suuniteltuja ominaisuuksia puuttuu
  - Pelisalin sivu:	/lista/<salinnimi>		Tehty ja testattu, poislukien jonotilanteen näkyminen
@@ -14,6 +14,7 @@
  - Rekisteröinti onnistui:	/register/success	Tehty, testattu  
  - Kirjautuminen epäonnistui:	/login/bad		Tehty, testattu  
  - Jonoon liittyminen:	/lista/poyta/<tableid>		Tehty, poislukien samaan jonoon useammin liittymisen estäminen
+ - Tyhjä kenttä:	/register/emptyfield		Tehty, testattu
 
 *Redirect-sivut*  
   
@@ -23,8 +24,8 @@
  - Saapuvista pois:	/arrival			Ei aloitettu  
  - Sisäänkirjautuminen:	/login/redirect			Tehty, testattu  
  - Uloskirjautuminen :   /logout                        Tehty, testattu  
- - Rekisteröityminen:	/register/redirect		Tehty, testattu  
-  
+ - Rekisteröityminen:	/register/redirect		Tehty, testattu
+    
 *.html-pohjat*  
   
  - /			index.html                      Tehty, testattu  
@@ -38,6 +39,7 @@
  - /admin/saliPoistaLisaa	saliPoistaLisaa.html	Ei aloitettu  
  - /login			login.html		Tehty, testattu  
  - /register/nametaken	nametaken.html			Tehty, testattu  
- - /register/success	registersuccess.html		Tehty, testattu  
+ - /register/success	registersuccess.html		Tehty, testattu 
  - /login/bad		loginbad.html			Tehty, testattu  
  - /lista/poyta/<tableid>	tableid.html		Ruma versio tehty
+ - /register/emptyfield	emptyfield.html			Tehty, testattu
