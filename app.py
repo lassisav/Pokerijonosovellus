@@ -105,7 +105,7 @@ def salinnimi(salinnimi):
 	sql = "SELECT id FROM locations WHERE name=:salinnimi"
 	result = db.session.execute(sql, {"salinnimi":salinnimi}).fetchone()
 	salid = result[0]
-	sql2 = "SELECT * FROM tables WHERE location_id=:salid"
+	sql2 = "SELECT T.id,T.name,T.game,T.betsize,T.players,T.seattotal,(SELECT COUNT(Q.id) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue = TRUE) FROM tables AS T WHERE T.location_id=:salid"
 	resu2 = db.session.execute(sql2, {"salid":salid})
 	poytalista = resu2.fetchall()
 	return render_template("salinnimi.html", salinnimi=salinnimi, poytalista=poytalista)

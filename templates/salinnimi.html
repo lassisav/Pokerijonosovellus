@@ -3,7 +3,12 @@
 </form>
 <h1>{{ salinnimi }}</h1><br>
 {% for p in poytalista %}
-{{ p[1] }}:<br> {{ p[6] }} ({{ p[7] }}) <br>{{ p[3] }}/{{ p[2] }} pelaajaa pöydässä<br>
+{{ p[1] }}:<br> {{ p[2] }} ({{ p[3] }}) <br>{{ p[4] }}/{{ p[5] }} pelaajaa pöydässä. 
+{% if p[6]>0 %}
+{{ p[6] }} jonossa.
+{% else %}
+Ei jonoa.
+{% endif %}<br>
 <form action="/lista/poyta/{{ p[0] }}" method="POST">
 <input type="submit" value="Liity">
 </input><br><br>
