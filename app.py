@@ -111,13 +111,16 @@ def salinnimi(salinnimi):
 	return render_template("salinnimi.html", salinnimi=salinnimi, poytalista=poytalista)
 
 #lista/table_id: Toteuttaa liittymisen
-#TODO Tarkistus, onko käyttäjä jo jonossa ko. pöytään
 @app.route("/lista/poyta/<string:tableid>", methods =["GET","POST"])
 def tableid(tableid):
 	name = session.get("username")
 	sql = "SELECT id FROM users WHERE name=:name"
 	result = db.session.execute(sql, {"name":name}).fetchone()
 	userid = result[0]
+	sqlx = "SELECT * FROM queue WHERE user_id=:userid AND table_id=:tableid"
+	result = db.session.execute(sqlx, {"userid":userid,"tableid":tableid}).fetchone()
+	if not result == None:
+		return redirect("/queuefail")
 	sql2 = "INSERT INTO queue(user_id,table_id,inqueue,arrived) VALUES(:userid,:tableid,TRUE,LOCALTIMESTAMP)"
 	db.session.execute(sql2, {"userid":userid,"tableid":tableid})
 	db.session.commit();
@@ -128,3 +131,8 @@ def tableid(tableid):
 	result = db.session.execute(sql4, {"tableid":tableid}).fetchone()
 	tablename = result[0]
 	return render_template("tableid.html", name=name, tablename=tablename, place=place)
+
+#queuefail: Käyttäjä päätyy sivulle, jos hän on jo jonossa pöytään, jonka jonoon hän yrittää liittyä
+@app.route("/queuefail")
+def queuefail():
+	return render_template("queuefail.html")

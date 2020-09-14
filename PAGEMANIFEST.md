@@ -4,7 +4,7 @@
  - Sisäänkirjautuminen:	/login				Tehty, testattu  
  - Rekisteröinti:	/register			Tehty, poislukien salasanan vahvistus -kentän toteutus, testattu  
  - Lista pelisaleista:	/lista				Esiversio tehty ja testattu, joitakin suuniteltuja ominaisuuksia puuttuu
- - Pelisalin sivu:	/lista/<salinnimi>		Tehty ja testattu, poislukien jonotilanteen näkyminen
+ - Pelisalin sivu:	/lista/<salinnimi>		Tehty, testattu
  - Kontrollisivu:	/control			Ei aloitettu  
  - Ylläpitosivu:	/admin				Ei aloitettu  
  - Käyttäjän lisäys:	/admin/addUser			Ei aloitettu  
@@ -13,8 +13,9 @@
  - Käyttäjänimi käytössä:	/register/nametaken	Tehty, testattu  
  - Rekisteröinti onnistui:	/register/success	Tehty, testattu  
  - Kirjautuminen epäonnistui:	/login/bad		Tehty, testattu  
- - Jonoon liittyminen:	/lista/poyta/<tableid>		Tehty, poislukien samaan jonoon useammin liittymisen estäminen
+ - Jonoon liittyminen:	/lista/poyta/<tableid>		Tehty, testattu
  - Tyhjä kenttä:	/register/emptyfield		Tehty, testattu
+ - Jonossa jo:		/queuefail			Tehty, testattu
 
 *Redirect-sivut*  
   
@@ -29,9 +30,9 @@
 *.html-pohjat*  
   
  - /			index.html                      Tehty, testattu  
- - /register		register.html                   Tehty, testattu  
+ - /register		register.html                   Tehty, posilukien salasanan vahvistus -kentän toteutus, testattu  
  - /lista		lista.html                      Esiversio tehty ja testattu, joitakin suunniteltuja ominaisuuksia puuttuu  
- - /lista/<salinnimi>	salinnimi.html                  Ruma versio tehty ja testattu, poislukien jonotilanteen näkyminen
+ - /lista/<salinnimi>	salinnimi.html                  Tehty, testattu
  - /control		control.html                    Ei aloitettu  
  - /admin		admin.html                      Ei aloitettu  
  - /admin/addUser	addUser.html                    Ei aloitettu  
@@ -41,5 +42,6 @@
  - /register/nametaken	nametaken.html			Tehty, testattu  
  - /register/success	registersuccess.html		Tehty, testattu 
  - /login/bad		loginbad.html			Tehty, testattu  
- - /lista/poyta/<tableid>	tableid.html		Ruma versio tehty
+ - /lista/poyta/<tableid>	tableid.html		Tehty, testattu
  - /register/emptyfield	emptyfield.html			Tehty, testattu
+ - /queuefail		queuefail.html			Tehty, testattu
