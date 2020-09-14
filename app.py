@@ -136,3 +136,17 @@ def tableid(tableid):
 @app.route("/queuefail")
 def queuefail():
 	return render_template("queuefail.html")
+
+#control: Työntekijän käyttäjäsivu, josta työntekijä voi hallinoida pöytiä ja jonoja
+#TODO: Lista työntekijän hallinnassa olevista pöydistä
+#TODO: Hallinnointitoiminnot
+@app.route("/control")
+def control():
+	name = session.get("username")
+	if not name == None:
+		sql = "SELECT * FROM users WHERE name=:name AND (status=2 OR status=1)"
+		result = db.session.execute(sql, {"name":name}).fetchone()
+		if not result == None:
+			#TODO: Työntekijän hallussa olevat pöydät
+			return render_template("control.html")
+	return render_template("nopermission.html")

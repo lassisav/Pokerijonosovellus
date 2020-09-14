@@ -5,7 +5,7 @@
  - Rekisteröinti:	/register			Tehty, poislukien salasanan vahvistus -kentän toteutus, testattu  
  - Lista pelisaleista:	/lista				Esiversio tehty ja testattu, joitakin suuniteltuja ominaisuuksia puuttuu
  - Pelisalin sivu:	/lista/<salinnimi>		Tehty, testattu
- - Kontrollisivu:	/control			Ei aloitettu  
+ - Kontrollisivu:	/control			Placeholder luotu, oikeustesti toteutettu  
  - Ylläpitosivu:	/admin				Ei aloitettu  
  - Käyttäjän lisäys:	/admin/addUser			Ei aloitettu  
  - Käyttäjän poisto:	/admin/removeUser		Ei aloitettu  
@@ -33,7 +33,8 @@
  - /register		register.html                   Tehty, posilukien salasanan vahvistus -kentän toteutus, testattu  
  - /lista		lista.html                      Esiversio tehty ja testattu, joitakin suunniteltuja ominaisuuksia puuttuu  
  - /lista/<salinnimi>	salinnimi.html                  Tehty, testattu
- - /control		control.html                    Ei aloitettu  
+ - /control		control.html                    Placeholder luotu
+ - /control		nopermission.html		Tehty, testattu  
  - /admin		admin.html                      Ei aloitettu  
  - /admin/addUser	addUser.html                    Ei aloitettu  
  - /admin/removeUser	removeUser.html			Ei aloitettu  
