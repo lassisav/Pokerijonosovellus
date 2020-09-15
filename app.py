@@ -147,6 +147,11 @@ def control():
 		sql = "SELECT * FROM users WHERE name=:name AND (status=2 OR status=1)"
 		result = db.session.execute(sql, {"name":name}).fetchone()
 		if not result == None:
-			#TODO: Työntekijän hallussa olevat pöydät
-			return render_template("control.html")
+			#TODO: Tarkistus käyttäjän admin-statuksesta
+			sql1 = "SELECT perms FROM users WHERE name=:name"
+			result = db.session.execute(sql1, {"name":name}).fetchone()
+			userperms = result[0]
+			sql2 = "SELECT (tables.name, seattotal, players, open, game, betsize, locations.name) FROM tables LEFT OUTER JOIN locations ON (tables.location_id = locations.id) WHERE :userperms LIKE '%' || code || '%'"
+			poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
+			return render_template("control.html", poytalista=poytalista)
 	return render_template("nopermission.html")
