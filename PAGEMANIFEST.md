@@ -22,7 +22,7 @@
  - Pöydän avaaminen:	/control/open/tableid		Tehty, testattu
  - Pöydän sulkeminen:	/control/close/tableid		Tehty, testattu  
  - Salista pöytään:	/control/join/tableid		Tehty, testattu
- - Jonosta saapuviin:	/next				Ei aloitettu  
+ - Jonosta saapuviin:	/control/next/tableid		Ei aloitettu  
  - Saapuvista pöytään:	/arrival			Ei aloitettu 
  - Pöydästä pois	/control/remove/tableid		Tehty, testattu
  - Sisäänkirjautuminen:	/login/redirect			Tehty, testattu  

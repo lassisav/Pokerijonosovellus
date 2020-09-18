@@ -151,7 +151,7 @@ def control():
 			sql1 = "SELECT perms FROM users WHERE name=:name"
 			result = db.session.execute(sql1, {"name":name}).fetchone()
 			userperms = result[0]
-			sql2 = "SELECT * FROM tables LEFT OUTER JOIN locations ON (tables.location_id = locations.id) WHERE :userperms LIKE '%' || code || '%'"
+			sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%'"
 			poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
 			return render_template("control.html", poytalista=poytalista)
 	return render_template("nopermission.html")
@@ -185,5 +185,21 @@ def opentable(tableid):
 def closetable(tableid):
 	sql = "UPDATE tables SET open='f' WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
+	db.session.commit()
+	return redirect("/control")
+
+#control/next/tableid: Toteuttaa pelaajan siirron jonosta liittymään
+@app.route("/control/next/<string:tableid>", methods=["GET","POST"])
+def nextfromqueue(tableid):
+	sql = "SELECT id FROM queue WHERE table_id=:tableid AND inqueue='t'"
+	result = db.session.execute(sql, {"tableid":tableid}).fetchone()
+	jonoid = result[0]
+	sql1 = "SELECT user_id FROM queue WHERE id=:jonoid"
+	result = db.session.execute(sql1, {"jonoid":jonoid}).fetchone()
+	uid = result[0]
+	sql2 = "UPDATE queue SET inqueue='f' WHERE id=:jonoid"
+	db.session.execute(sql2, {"jonoid":jonoid})
+	sql3 = "INSERT INTO joiners(user_id,table_id,tojoin,arrived) VALUES(:uid,:tableid,TRUE,LOCALTIMESTAMP)"
+	db.session.execute(sql3, {"uid":uid,"tableid":tableid})
 	db.session.commit()
 	return redirect("/control")
