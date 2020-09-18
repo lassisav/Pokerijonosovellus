@@ -1,1 +1,22 @@
-TBA 2020
+{% for p in poytalista %}
+{% if p[5] is not true %}
+{{ p[1] }}: Kiinni<br>
+<form action="/control/open/{{ p[0] }}" method="GET">
+<input type="submit" value="Avaa pöytä">
+</form>
+{% else %}
+{{ p[1] }}: Auki<br>
+Peli: {{ p[6] }}<br>
+Panokset: {{ p[7] }}<br>
+{{ p[3] }}/{{ p[2] }} pelaajaa pöydässä<br>
+<form action="/control/join/{{ p[0] }}" method="GET">
+<input type="submit" value="Lisää pöytään salista">
+</form>
+<form action="/control/remove/{{ p[0] }}" method="GET">
+<input type="submit" value="Poista pelaaja pöydästä">
+</form>
+<form action="/control/close/{{ p[0] }}" method="GET">
+<input type="submit" value="Sulje pöytä">
+</form>
+{% endif %}
+{% endfor %}

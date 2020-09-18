@@ -151,7 +151,39 @@ def control():
 			sql1 = "SELECT perms FROM users WHERE name=:name"
 			result = db.session.execute(sql1, {"name":name}).fetchone()
 			userperms = result[0]
-			sql2 = "SELECT (tables.name, seattotal, players, open, game, betsize, locations.name) FROM tables LEFT OUTER JOIN locations ON (tables.location_id = locations.id) WHERE :userperms LIKE '%' || code || '%'"
+			sql2 = "SELECT * FROM tables LEFT OUTER JOIN locations ON (tables.location_id = locations.id) WHERE :userperms LIKE '%' || code || '%'"
 			poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
 			return render_template("control.html", poytalista=poytalista)
 	return render_template("nopermission.html")
+
+#control/join/tableid: Toteuttaa pelaajan lisäämisen pöytään työntekijän toimesta ilman käyntiä jonossa
+@app.route("/control/join/<string:tableid>", methods=["GET","POST"])
+def jointable(tableid):
+	sql = "UPDATE tables SET players=players+1 WHERE id=:tableid"
+	db.session.execute(sql, {"tableid":tableid})
+	db.session.commit()
+	return redirect("/control")
+
+#control/remove/tableid: Toteuttaa pelaajan poistamisen pöydästä
+@app.route("/control/remove/<string:tableid>", methods=["GET","POST"])
+def removefromtable(tableid):
+	sql = "UPDATE tables SET players=players-1 WHERE id=:tableid"
+	db.session.execute(sql, {"tableid":tableid})
+	db.session.commit()
+	return redirect("/control")
+
+#control/open/tableid: Toteuttaa pöydän avaamisen
+@app.route("/control/open/<string:tableid>", methods=["GET","POST"])
+def opentable(tableid):
+	sql = "UPDATE tables SET open='t' WHERE id=:tableid"
+	db.session.execute(sql, {"tableid":tableid})
+	db.session.commit()
+	return redirect("/control")
+
+#control/close/tableid: Toteuttaa pöydän sulkemisen
+@app.route("/control/close/<string:tableid>", methods=["GET","POST"])
+def closetable(tableid):
+	sql = "UPDATE tables SET open='f' WHERE id=:tableid"
+	db.session.execute(sql, {"tableid":tableid})
+	db.session.commit()
+	return redirect("/control")
