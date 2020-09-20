@@ -23,6 +23,25 @@
  - Ylläpitäjä ja työntekijä voivat luoda työntekijä-tilejä
  - Käyttäjä saa ilmoituksen kun hänet siirretään saapuviin pelaajiin, tai hänet poistetaan jonosta
 
+*Sovellukseen jo toteutetut ominaisuudet*
+
+ - Sovelluksen tietokantarakenne
+ - Käyttäjän rekisteröityminen ja kirjautuminen sivulle
+ - Listasivulta siirtyminen salikohtaisille sivuille
+ - Käyttäjän liittyminen jonoon
+ - Oikeuksien tarkistaminen työntekijöiden ja ylläpitäjien sivuilla
+ - Pöydässä olevien pelaajien määrän päivittäminen
+
+*Sovellukseen toteutettavat, vielä puuttuvat ominaisuudet*
+
+ - Jonosijan näyttäminen käyttäjälle
+ - Liittymään pääsyn näyttäminen käyttäjälle
+ - Käyttäjän poistuminen jonoista
+ - Jonottajien tietojen näyttäminen työntekijälle kontrollisivulla
+ - Työntekijän toiminto siirtää käyttäjiä jonosta valmistautumaan ja valmistautumasta pöytään
+ - Työntekijän toiminto poistaa ja muokata pöytiä
+ - Ylläpitäjän toiminnot
+
 *Etusivu*
 
  - Etusivulla käyttäjä voi kirjautua sisään ja rekisteröityä
@@ -39,16 +58,16 @@
 
  - Salin sivulla käyttäjä näkee tarkemmat tiedot kustakin pöydästä (Peli, panostaso, senhetkinen ja maksimipelaajamäärä, jonon pituus)
  - Salin sivulla pöytää klikkaamalla käyttäjä ilmoittautuu jonoon
- - Jonossa olevat käyttäjätt näkevät jonotustilanteensa sovelluksen jokaisella sivulla
+ - Jonossa olevat käyttäjät näkevät jonotustilanteensa sovelluksen jokaisella sivulla
 
 *Pöytäpaikan vapautuessa*
 
  - Käyttäjän saadessa paikan pöydästä, tämä ilmoitetaan hänelle jokaisella sovelluksen sivulla
  - Työntekijä vahvistaa käyttäjän saapumisen/saapumatta jättämisen poistamalla tämän vapautuvalta paikalta
 
-*Kontrollisivu (pelisalikohtainen)*
+*Kontrollisivu*
 
- - Työntekijä näkee oman salinsa pöytien tilanteet (samat kuin pelisalin omalla sivulla), sekä jonossa olevat käyttäjät
+ - Työntekijä näkee omien saliensa pöytien tilanteet (samat kuin pelisalin omalla sivulla), sekä jonossa olevat käyttäjät
  - Työntekijä voi avata ja sulkea pöytiä
  - Työntekijä voi ilmoittaa järjestelmälle vapautuneesta paikasta, jolloin jonon ensimmäinen käyttäjä siirtyy saapuviin pelaajiin
  - Työntekijä näkee saapuvat pelaajat, sekä ajan jonka he ovat olleet saapumassa
