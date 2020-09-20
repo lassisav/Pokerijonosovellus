@@ -4,6 +4,8 @@
 
 **Pokerijonosovellus**
 
+ - Heroku: pokerijonosovellus.herokuapp.com
+
 *Sovelluksen tarkoitus*
 
  - Sovelluksella hallinoidaan pokeripöytien, jotka on jaoiteltu toimipisteittäin (kutsutaan pelisaleiksi), pelaajatilannetta, jonotusta ja jonosta pöytään siirtymistä
