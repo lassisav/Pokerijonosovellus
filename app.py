@@ -148,12 +148,17 @@ def control():
 		result = db.session.execute(sql, {"name":name}).fetchone()
 		if not result == None:
 			#TODO: Tarkistus käyttäjän admin-statuksesta
+			try:
+				if msgsource == "QtoJ":
+					message = uname+viesti+tname
+			except:
+				message = None
 			sql1 = "SELECT perms FROM users WHERE name=:name"
 			result = db.session.execute(sql1, {"name":name}).fetchone()
 			userperms = result[0]
-			sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%'"
+			sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t') FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%'"
 			poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
-			return render_template("control.html", poytalista=poytalista)
+			return render_template("control.html", poytalista=poytalista, message=message)
 	return render_template("nopermission.html")
 
 #control/join/tableid: Toteuttaa pelaajan lisäämisen pöytään työntekijän toimesta ilman käyntiä jonossa
@@ -193,6 +198,8 @@ def closetable(tableid):
 def nextfromqueue(tableid):
 	sql = "SELECT id FROM queue WHERE table_id=:tableid AND inqueue='t'"
 	result = db.session.execute(sql, {"tableid":tableid}).fetchone()
+	if result[0] is None:
+		return redirect("/control/next/fail")
 	jonoid = result[0]
 	sql1 = "SELECT user_id FROM queue WHERE id=:jonoid"
 	result = db.session.execute(sql1, {"jonoid":jonoid}).fetchone()
@@ -202,4 +209,10 @@ def nextfromqueue(tableid):
 	sql3 = "INSERT INTO joiners(user_id,table_id,tojoin,arrived) VALUES(:uid,:tableid,TRUE,LOCALTIMESTAMP)"
 	db.session.execute(sql3, {"uid":uid,"tableid":tableid})
 	db.session.commit()
-	return redirect("/control")
+	sql4 = "SELECT name FROM users WHERE id=:uid"
+	result = db.session.execute(sql4, {"uid":uid}).fetchone()
+	uname = result[0]
+	sql5 = "SELECT name FROM tables WHERE id=tableid"
+	result = db.session.execute(sql5, {"tableid":tableid}).fetchone()
+	tname = result[0]
+	return redirect("/control",uname=uname,viesti=" lisätty pöytään: ",tname=tname,msgsource="QtoJ")
