@@ -5,7 +5,7 @@
  - Rekisteröinti:	/register			Tehty, poislukien salasanan vahvistus -kentän toteutus, testattu  
  - Lista pelisaleista:	/lista				Esiversio tehty ja testattu, joitakin suuniteltuja ominaisuuksia puuttuu
  - Pelisalin sivu:	/lista/<salinnimi>		Tehty, testattu
- - Kontrollisivu:	/control			Osittain tehty (toiminnot joihin ei kuulu jonotus tai pöytätietojen muokkaaminen), tehdyt toiminnot testattu 
+ - Kontrollisivu:	/control			Osittain tehty (toiminnot joihin ei kuulu pöytätietojen muokkaaminen), tehdyt toiminnot testattu 
  - Ylläpitosivu:	/admin				Ei aloitettu  
  - Käyttäjän lisäys:	/admin/addUser			Ei aloitettu  
  - Käyttäjän poisto:	/admin/removeUser		Ei aloitettu  
@@ -22,7 +22,7 @@
  - Pöydän avaaminen:	/control/open/tableid		Tehty, testattu
  - Pöydän sulkeminen:	/control/close/tableid		Tehty, testattu  
  - Salista pöytään:	/control/join/tableid		Tehty, testattu
- - Jonosta saapuviin:	/control/next/tableid		Ei aloitettu  
+ - Jonosta saapuviin:	/control/next/tableid		Tehty, testattu
  - Saapuvista pöytään:	/arrival			Ei aloitettu 
  - Pöydästä pois	/control/remove/tableid		Tehty, testattu
  - Sisäänkirjautuminen:	/login/redirect			Tehty, testattu  
