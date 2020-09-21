@@ -36,6 +36,7 @@ def loginredirect():
 		if check_password_hash(hash_value, password):
 			#Oikea tunnus ja salasana
 			session["username"] = username
+			session["message"] = "nothingtoseehere"
 			return redirect("/lista")
 		else:
 			#Väärä salasana
@@ -152,12 +153,8 @@ def control():
 		result = db.session.execute(sql, {"name":name}).fetchone()
 		if not result == None:
 			#TODO: Tarkistus käyttäjän admin-statuksesta
-			msg = "nada"
-			try:
-				if session["message"] != "nothingtoseehere":
-					msg = session["message"]
-			finally:
-				session["message"] = "nothingtoseehere"
+			msg = session["message"]
+			session["message"] = "nothingtoseehere"
 			sql1 = "SELECT perms FROM users WHERE name=:name"
 			result = db.session.execute(sql1, {"name":name}).fetchone()
 			userperms = result[0]
