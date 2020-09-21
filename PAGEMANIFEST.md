@@ -16,6 +16,7 @@
  - Jonoon liittyminen:	/lista/poyta/<tableid>		Tehty, testattu
  - Tyhjä kenttä:	/register/emptyfield		Tehty, testattu
  - Jonossa jo:		/queuefail			Tehty, testattu
+ - Saapuvista pöytään:	/control/arrival/<tableid>	Tehty, ei testattu
 
 *Redirect-sivut*  
   
@@ -23,11 +24,12 @@
  - Pöydän sulkeminen:	/control/close/tableid		Tehty, testattu  
  - Salista pöytään:	/control/join/tableid		Tehty, testattu
  - Jonosta saapuviin:	/control/next/tableid		Tehty, testattu
- - Saapuvista pöytään:	/arrival			Ei aloitettu 
+ - Jono->saapuminen epäonnistui:	/control/next/fail	Tehty, ei testattu
  - Pöydästä pois	/control/remove/tableid		Tehty, testattu
  - Sisäänkirjautuminen:	/login/redirect			Tehty, testattu  
  - Uloskirjautuminen :  /logout				Tehty, testattu  
  - Rekisteröityminen:	/register/redirect		Tehty, testattu
+ - Saapuvan valinta:	/control/arrival/add/joinid	Tehty, ei testattu
     
 *.html-pohjat*  
   
@@ -48,3 +50,4 @@
  - /lista/poyta/<tableid>	tableid.html		Tehty, testattu
  - /register/emptyfield	emptyfield.html			Tehty, testattu
  - /queuefail		queuefail.html			Tehty, testattu
+ - /control/arrival/<tableid>	arrival.html		Tehty, ei testattu

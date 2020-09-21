@@ -226,3 +226,51 @@ def nextfromqueue(tableid):
 
 #control/next/fail: Luo viestin valmistautumaan siirtämisen epäonnistumsesta johtuen siitä, että valittuun pöytään ei ole jonoa(backup, ei pitäisi olla tarpeellinen)
 #TODO: kaikki
+@app.route("/control/next/fail", methods=["GET","POST"])
+def nextfail():
+	session["message"] = "Käyttäjää ei voitu siirtää jonosta valmistautumaan, koska jonossa ei ole yhtään käyttäjää"
+	return redirect("/control")
+
+#control/arrival/tableid: Toteuttaa pelaajan siirron valmistautumasta pöytään
+@app.route("/control/arrival/<string:tableid>", methods=["GET","POST"])
+def arrival(tableid):
+	sqlx = "SELECT COUNT(*) FROM joiners WHERE table_id=:tableid AND tojoin='t'"
+	result = db.session.execute(sqlx, {"tableid":tableid}).fetchone()
+	if result[0] == 1:
+		sql1 = "SELECT U.name FROM joiners AS J LEFT OUTER JOIN users as U ON (J.user_id=U.id) WHERE J.table_id=:tableid AND tojoin='t'"
+		result = db.session.execute(sql1, {"tableid":tableid}).fetchone()
+		uname = result[0]
+		sql2 = "UPDATE joiners SET tojoin='f' WHERE table_id=:tableid"
+		db.session.execute(sql2, {"tableid":tableid})
+		sql3 = "UPDATE tables SET players=players+1 WHERE id=:tableid"
+		db.session.execute(sql3, {"tableid":tableid})
+		db.session.commit()
+		sql4 = "SELECT name FROM tables WHERE id=:tableid"
+		result = db.session.execute(sql4, {"tableid":tableid}).fetchone()
+		tname = result[0]
+		session["message"] = uname + " siirtyi pöytään " + tname
+		return redirect("/control")
+	else:
+		sql = "SELECT U.name,J.id FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.table_id=:tableid AND tojoin='t'"
+		nimilista = db.session.execute(sql, {"tableid":tableid}).fetchall()
+		return render_template("arrival.html", nimilista=nimilista)
+
+#control/arrival/add/tableid: Toteuttaa listasta valitun pelaajan siirtämisen pöytään
+@app.route("/control/arrival/add/<string:joinid>", methods=["GET","POST"])
+def arrivaladd(joinid):
+	sqly = "SELECT U.name FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.id=:joinid"
+	result = db.session.execute(sqly, {"joinid":joinid}).fetchone()
+	uname = result[0]
+	sqlx = "SELECT table_id FROM joiners WHERE id=:joinid"
+	result = db.session.execute(sqlx, {"joinid":joinid}).fetchone()
+	tableid = result[0]
+	sql = "UPDATE joiners SET tojoin='f' WHERE id=:joinid"
+	db.session.execute(sql, {"joinid":joinid})
+	sql1 = "UPDATE tables SET players=players+1 WHERE id=:tableid"
+	db.session.execute(sql1, {"tableid":tableid})
+	db.session.commit()
+	sql2 = "SELECT name FROM tables WHERE id=:tableid"
+	result = db.session.execute(sql2, {"tableid":tableid})
+	tname = result[0]
+	session["message"] = uname + " siirtyi pöytään:  " + tname
+	return redirect("/control")
