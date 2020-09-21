@@ -117,8 +117,12 @@ def tableid(tableid):
 	sql = "SELECT id FROM users WHERE name=:name"
 	result = db.session.execute(sql, {"name":name}).fetchone()
 	userid = result[0]
-	sqlx = "SELECT * FROM queue WHERE user_id=:userid AND table_id=:tableid"
+	sqlx = "SELECT * FROM queue WHERE user_id=:userid AND table_id=:tableid AND inqueue='t'"
 	result = db.session.execute(sqlx, {"userid":userid,"tableid":tableid}).fetchone()
+	if not result == None:
+		return redirect("/queuefail")
+	sqly = "SELECT * FROM joiners WHERE user_id=:userid AND table_id=:tableid AND tojoin='t'"
+	result = db.session.execute(sqly, {"userid":userid,"tableid":tableid}).fetchone()
 	if not result == None:
 		return redirect("/queuefail")
 	sql2 = "INSERT INTO queue(user_id,table_id,inqueue,arrived) VALUES(:userid,:tableid,TRUE,LOCALTIMESTAMP)"
@@ -140,7 +144,7 @@ def queuefail():
 #control: Työntekijän käyttäjäsivu, josta työntekijä voi hallinoida pöytiä ja jonoja
 #TODO: Lista työntekijän hallinnassa olevista pöydistä
 #TODO: Hallinnointitoiminnot
-@app.route("/control")
+@app.route("/control", methods=["GET","POST"])
 def control():
 	name = session.get("username")
 	if not name == None:
@@ -148,17 +152,22 @@ def control():
 		result = db.session.execute(sql, {"name":name}).fetchone()
 		if not result == None:
 			#TODO: Tarkistus käyttäjän admin-statuksesta
+			msg = "nada"
 			try:
-				if msgsource == "QtoJ":
-					message = uname+viesti+tname
-			except:
-				message = None
+				if session["message"] != "nothingtoseehere":
+					msg = session["message"]
+			finally:
+				session["message"] = "nothingtoseehere"
 			sql1 = "SELECT perms FROM users WHERE name=:name"
 			result = db.session.execute(sql1, {"name":name}).fetchone()
 			userperms = result[0]
-			sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t') FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%'"
+			sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t'),(SELECT COUNT(*) FROM joiners AS J WHERE J.table_id=T.id AND tojoin='t') FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%'"
 			poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
-			return render_template("control.html", poytalista=poytalista, message=message)
+			sql3 = "SELECT Q.table_id,U.name,Q.arrived FROM queue AS Q LEFT OUTER JOIN users AS U ON (Q.user_id=U.id) WHERE Q.inqueue='t'"
+			userlista = db.session.execute(sql3).fetchall()
+			sql4 = "SELECT J.table_id,U.name,J.arrived FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.tojoin='t'"
+			valmislista = db.session.execute(sql4).fetchall()
+			return render_template("control.html", poytalista=poytalista, msg=msg, userlista=userlista, valmislista=valmislista)
 	return render_template("nopermission.html")
 
 #control/join/tableid: Toteuttaa pelaajan lisäämisen pöytään työntekijän toimesta ilman käyntiä jonossa
@@ -204,15 +213,19 @@ def nextfromqueue(tableid):
 	sql1 = "SELECT user_id FROM queue WHERE id=:jonoid"
 	result = db.session.execute(sql1, {"jonoid":jonoid}).fetchone()
 	uid = result[0]
-	sql2 = "UPDATE queue SET inqueue='f' WHERE id=:jonoid"
-	db.session.execute(sql2, {"jonoid":jonoid})
-	sql3 = "INSERT INTO joiners(user_id,table_id,tojoin,arrived) VALUES(:uid,:tableid,TRUE,LOCALTIMESTAMP)"
-	db.session.execute(sql3, {"uid":uid,"tableid":tableid})
-	db.session.commit()
 	sql4 = "SELECT name FROM users WHERE id=:uid"
 	result = db.session.execute(sql4, {"uid":uid}).fetchone()
 	uname = result[0]
-	sql5 = "SELECT name FROM tables WHERE id=tableid"
+	sql5 = "SELECT name FROM tables WHERE id=:tableid"
 	result = db.session.execute(sql5, {"tableid":tableid}).fetchone()
 	tname = result[0]
-	return redirect("/control",uname=uname,viesti=" lisätty pöytään: ",tname=tname,msgsource="QtoJ")
+	sql2 = "UPDATE queue SET inqueue='f' WHERE id=:jonoid"
+	db.session.execute(sql2, {"jonoid":jonoid})
+	sql3 = "INSERT INTO joiners(user_id,table_id,tojoin,arrived) VALUES (:uid,:tableid,TRUE,LOCALTIMESTAMP)"
+	db.session.execute(sql3, {"uid":uid,"tableid":tableid})
+	db.session.commit()
+	session["message"] = uname + " lisätty valmistautumaan pöytään: " + tname
+	return redirect("/control")
+
+#control/next/fail: Luo viestin valmistautumaan siirtämisen epäonnistumsesta johtuen siitä, että valittuun pöytään ei ole jonoa(backup, ei pitäisi olla tarpeellinen)
+#TODO: kaikki

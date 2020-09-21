@@ -1,5 +1,5 @@
-{% if message != None %}
-{{ message }}
+{% if msg != "nada" %}
+{{ msg }}<br>
 {% endif %}
 {% for p in poytalista %}
 {% if p[5] is not true %}
@@ -13,6 +13,23 @@
 	Panokset: {{ p[7] }}<br>
 	{{ p[3] }}/{{ p[2] }} pelaajaa pöydässä<br>
 	{{ p[8] }} pelaajaa jonossa<br>
+	{% if p[8] != 0 %}
+		Pelaajat jonossa:<br>
+		{% for x in userlista %}
+			{% if x[0] == p[0] %}
+				{{ x[1] }}: {{ x[2] }}<br>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	{{ p[9] }} pelaajaa valmistautuu<br>
+	{% if p[9] != 0 %}
+		Pelaajat valmistautumassa:<br>
+		{% for y in valmislista %}
+			{% if y[0] == p[0] %}
+				{{ y[1] }}; {{ y[2] }}<br>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
 	<form action="/control/join/{{ p[0] }}" method="GET">
 	<input type="submit" value="Lisää pöytään salista">
 	</form>
@@ -20,13 +37,15 @@
 	<input type="submit" value="Poista pelaaja pöydästä">
 	</form>
 	{% if p[8] != 0 %}
-	<form action="/control/next/{{ p[0] }}" method="GET">
-	<input type="submit" value="Päästä pelaaja jonosta valmistautumaan">
-	</form>
+		<form action="/control/next/{{ p[0] }}" method="GET">
+		<input type="submit" value="Päästä pelaaja jonosta valmistautumaan">
+		</form>
 	{% endif %}
-	<form action="/control/arrival/{{ p[0] }}">
-	<input type="submit" value="Siirrä valmistautuva pelaaja pöytään">
-	</form>
+	{% if p[9] != 0 %}
+		<form action="/control/arrival/{{ p[0] }}" method="GET">
+		<input type="submit" value="Siirrä valmistautuva pelaaja pöytään">
+		</form>
+	{% endif %}
 	<form action="/control/close/{{ p[0] }}" method="GET">
 	<input type="submit" value="Sulje pöytä">
 	</form>
