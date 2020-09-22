@@ -1,9 +1,13 @@
 <!--
 Listasivulta käyttäjä näkee pelisalit, ja voi siirtyä pelisalikohtaisille sivuille
 -->
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
 <h1>Valitse sali:</h1>
 {% for sali in salit %}
 <form action="/lista/{{ sali[0] }}" method="POST">
 <input type="submit" value={{ sali[0] }}>
 </form>
 {% endfor %}
+{% endblock %}

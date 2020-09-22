@@ -2,23 +2,5 @@
 Etusivu:
 Etusivulta voi kirjautua sisään tai rekisteröityä.
 -->
-<title>Tsoha I/20-21; lassisav</title>
-<h1>Pokerijonosovellus</h1>
-{% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-<form action="/lista" method="POST">
-<input type="submit" value="Takaisin sivulle">
-</form>
-<form action="/logout" method="POST">
-<input type="submit" value="Kirjaudu ulos">
-</form>
-{% else %}
-<form action="/login" method="POST">
-<input type="submit" value="Sisäänkirjautumiseen!">
-<br>
-</form>
-
-<form action="/register" method="POST">
-<input type="submit" value="Rekisteröitymään!">
-</form>
-{% endif %}
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}

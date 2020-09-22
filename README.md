@@ -6,6 +6,12 @@
 
  - Heroku: pokerijonosovellus.herokuapp.com
 
+*Ohjeet vertaisarviontiin*
+
+ - Sovellukseen on luotu työntekijätoimintojen testaamista varten käyttäjä, jonka käyttäjänimi on essi, salasana esimerkki
+ - Admin-toimintojen testaukseen ei ole olemassa testikäyttäjää, sillä admintoimintoja ei ole vielä toteutettu
+ - Työntekijäkäyttäjille ei ole (vielä) helppokäyttöistä tapaa liikkua työntekijäsivujen ja käyttäjäsivujen välillä, joten testataksesi työntekijätoimintoja kirjaudu sisään ja sen jälkeen siirry sivulle /control
+
 *Sovelluksen tarkoitus*
 
  - Sovelluksella hallinoidaan pokeripöytien, jotka on jaoiteltu toimipisteittäin (kutsutaan pelisaleiksi), pelaajatilannetta, jonotusta ja jonosta pöytään siirtymistä
@@ -33,14 +39,14 @@
  - Käyttäjän liittyminen jonoon
  - Oikeuksien tarkistaminen työntekijöiden ja ylläpitäjien sivuilla
  - Pöydässä olevien pelaajien määrän päivittäminen
+ - Jonottajien tietojen näyttäminen työntekijälle kontrollisivulta
+ - Työntekijän toiminto siirtää käyttäjiä jonosta valmistautumaan ja valmistautumasta pöytään
 
 *Sovellukseen toteutettavat, vielä puuttuvat ominaisuudet*
 
- - Jonosijan näyttäminen käyttäjälle
+ - Jonosijan näyttäminen käyttäjälle sovelluksessa
  - Liittymään pääsyn näyttäminen käyttäjälle
- - Käyttäjän poistuminen jonoista
- - Jonottajien tietojen näyttäminen työntekijälle kontrollisivulla
- - Työntekijän toiminto siirtää käyttäjiä jonosta valmistautumaan ja valmistautumasta pöytään
+ - Käyttäjän omaehtoinen poistuminen jonoista
  - Työntekijän toiminto poistaa ja muokata pöytiä
  - Ylläpitäjän toiminnot
 

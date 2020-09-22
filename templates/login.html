@@ -1,8 +1,10 @@
 <!--
 Sisäänkirjautumissivulla käyttäjä syöttää tunnuksen ja salasanan kirjautumista varten
 -->
+{% extends "layout.html" %}
+{% block title %}Etusivu{% endblock %}
+{% block content %}
 {% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
 <form action="/lista" method="POST">
 <input type="submit" value="Takaisin sivulle">
 </form>
@@ -18,3 +20,4 @@ Sisäänkirjautumissivulla käyttäjä syöttää tunnuksen ja salasanan kirjaut
 <input type="submit" value="Kirjaudu">
 </form>
 {% endif %}
+{% endblock %}

@@ -22,17 +22,17 @@ def onkoAdmin():
 		result = db.session.execute(sql, {"name":name}).fetchone()
 		if not result == None:
 			return True
-	return False:
+	return False
 
 #onkoTyontekija: Funktio, jolla tarkistetaan käyttäjän työntekijästatus
 def onkoTyontekija():
 	name = session.get("username")
-        if not name == None:
-                sql = "SELECT * FROM users WHERE name=:name AND status=2"
-                result = db.session.execute(sql, {"name":name}).fetchone()
-                if not result == None:
-                        return True 
-        return False:
+	if not name == None:
+		sql = "SELECT * FROM users WHERE name=:name AND status=2"
+		result = db.session.execute(sql, {"name":name}).fetchone()
+		if not result == None:
+			return True
+	return False
 
 
 #SIVUT:
@@ -199,12 +199,12 @@ def control():
 @app.route("/control/join/<string:tableid>", methods=["GET","POST"])
 def jointable(tableid):
 	allow = False
-        if onkoAdmin():
-                allow = True
-        elif onkoTyontekija():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
+	if onkoAdmin():
+		allow = True
+	elif onkoTyontekija():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
 	sql = "UPDATE tables SET players=players+1 WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
@@ -214,12 +214,12 @@ def jointable(tableid):
 @app.route("/control/remove/<string:tableid>", methods=["GET","POST"])
 def removefromtable(tableid):
 	allow = False
-        if onkoAdmin():
-                allow = True
-        elif onkoTyontekija():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
+	if onkoAdmin():
+		allow = True
+	elif onkoTyontekija():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
 	sql = "UPDATE tables SET players=players-1 WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
@@ -229,12 +229,12 @@ def removefromtable(tableid):
 @app.route("/control/open/<string:tableid>", methods=["GET","POST"])
 def opentable(tableid):
 	allow = False
-        if onkoAdmin():
-                allow = True
-        elif onkoTyontekija():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
+	if onkoAdmin():
+		allow = True
+	elif onkoTyontekija():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
 	sql = "UPDATE tables SET open='t' WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
@@ -244,12 +244,12 @@ def opentable(tableid):
 @app.route("/control/close/<string:tableid>", methods=["GET","POST"])
 def closetable(tableid):
 	allow = False
-        if onkoAdmin():
-                allow = True
-        elif onkoTyontekija():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
+	if onkoAdmin():
+		allow = True
+	elif onkoTyontekija():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
 	sql = "UPDATE tables SET open='f' WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
@@ -259,12 +259,12 @@ def closetable(tableid):
 @app.route("/control/next/<string:tableid>", methods=["GET","POST"])
 def nextfromqueue(tableid):
 	allow = False
-        if onkoAdmin():
-                allow = True
-        elif onkoTyontekija():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
+	if onkoAdmin():
+		allow = True
+	elif onkoTyontekija():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
 	sql = "SELECT id FROM queue WHERE table_id=:tableid AND inqueue='t'"
 	result = db.session.execute(sql, {"tableid":tableid}).fetchone()
 	if not result:
@@ -292,12 +292,12 @@ def nextfromqueue(tableid):
 @app.route("/control/next/fail", methods=["GET","POST"])
 def nextfail():
 	allow = False
-        if onkoAdmin():
-                allow = True
-        elif onkoTyontekija():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
+	if onkoAdmin():
+		allow = True
+	elif onkoTyontekija():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
 	session["message"] = "Käyttäjää ei voitu siirtää jonosta valmistautumaan, koska jonossa ei ole yhtään käyttäjää"
 	return redirect("/control")
 
@@ -305,12 +305,12 @@ def nextfail():
 @app.route("/control/arrival/<string:tableid>", methods=["GET","POST"])
 def arrival(tableid):
 	allow = False
-        if onkoAdmin():
-                allow = True
-        elif onkoTyontekija():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
+	if onkoAdmin():
+		allow = True
+	elif onkoTyontekija():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
 	sqlx = "SELECT COUNT(*) FROM joiners WHERE table_id=:tableid AND tojoin='t'"
 	result = db.session.execute(sqlx, {"tableid":tableid}).fetchone()
 	if result[0] == 1:
@@ -336,12 +336,12 @@ def arrival(tableid):
 @app.route("/control/arrival/add/<string:joinid>", methods=["GET","POST"])
 def arrivaladd(joinid):
 	allow = False
-        if onkoAdmin():
-                allow = True
-        elif onkoTyontekija():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
+	if onkoAdmin():
+		allow = True
+	elif onkoTyontekija():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
 	sqly = "SELECT U.name FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.id=:joinid"
 	result = db.session.execute(sqly, {"joinid":joinid}).fetchone()
 	uname = result[0]
