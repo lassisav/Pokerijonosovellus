@@ -1,4 +1,5 @@
+{% extends "layout.html" %}
+{% block title %}Pöytään liittyminen onnistui{% endblock %}
+{% block content %}
 Olet jonossa pöytään: {{ tablename }} sijalla: {{ place }}
-<form action="/lista" method="POST">
-<input type="submit" value="Takaisin listaan">
-</form>
+{% endblock content %}

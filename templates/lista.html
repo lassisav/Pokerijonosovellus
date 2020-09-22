@@ -9,5 +9,10 @@ Listasivulta käyttäjä näkee pelisalit, ja voi siirtyä pelisalikohtaisille s
 <form action="/lista/{{ sali[0] }}" method="POST">
 <input type="submit" value={{ sali[0] }}>
 </form>
+{% if sali[1]==1 %}
+1 pöytä auki<br>
+{% else %}
+{{ sali[1] }} pöytää auki<br>
+{% endif %}
 {% endfor %}
 {% endblock %}

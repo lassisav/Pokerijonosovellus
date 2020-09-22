@@ -124,7 +124,7 @@ def registersuccess():
 #TODO: Kaikki, sivu tällä hetkellä placeholder
 @app.route("/lista", methods=["GET","POST"])
 def lista():
-	saliote = db.session.execute("SELECT name FROM locations")
+	saliote = db.session.execute("SELECT L.name, (SELECT COUNT(*) FROM tables AS T WHERE T.location_id=L.id AND T.open='t') FROM locations AS L")
 	salit = saliote.fetchall()
 	return render_template("lista.html", salit=salit)
 
@@ -183,6 +183,7 @@ def control():
 	if not allow:
 		return render_template("nopermission.html")
 	msg = session["message"]
+	name = session["username"]
 	session["message"] = "nothingtoseehere"
 	sql1 = "SELECT perms FROM users WHERE name=:name"
 	result = db.session.execute(sql1, {"name":name}).fetchone()

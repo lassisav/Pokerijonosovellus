@@ -1,7 +1,7 @@
-<form action="/lista" method="POST">
-<input type="submit" value="Takaisin listaan">
-</form>
-<h1>{{ salinnimi }}</h1><br>
+{% extends "layout.html" %}
+{% block title %}{{ salinnimi }}{% endblock %}
+{% block content %}
+<br>
 {% for p in poytalista %}
 {{ p[1] }}:<br> {{ p[2] }} ({{ p[3] }}) <br>{{ p[4] }}/{{ p[5] }} pelaajaa pöydässä. 
 {% if p[6]>0 %}
@@ -13,3 +13,4 @@ Ei jonoa.
 <input type="submit" value="Liity">
 </input><br><br>
 {% endfor %}
+{% endblock content %}
