@@ -10,6 +10,34 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = getenv("SECRET_KEY")
 db = SQLAlchemy(app)
 
+
+#APUFUNKTIOT:
+
+
+#onkoAdmin: Funktio jolla tarkistetaan käyttäjän adminstatus
+def onkoAdmin():
+	name = session.get("username")
+	if not name == None:
+		sql = "SELECT * FROM users WHERE name=:name AND status=1"
+		result = db.session.execute(sql, {"name":name}).fetchone()
+		if not result == None:
+			return True
+	return False:
+
+#onkoTyontekija: Funktio, jolla tarkistetaan käyttäjän työntekijästatus
+def onkoTyontekija():
+	name = session.get("username")
+        if not name == None:
+                sql = "SELECT * FROM users WHERE name=:name AND status=2"
+                result = db.session.execute(sql, {"name":name}).fetchone()
+                if not result == None:
+                        return True 
+        return False:
+
+
+#SIVUT:
+
+
 #Etusivu: Etusivulta siirrytään sisäänkirjautumiseen tai rekisteröitymiseen.
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -147,29 +175,36 @@ def queuefail():
 #TODO: Hallinnointitoiminnot
 @app.route("/control", methods=["GET","POST"])
 def control():
-	name = session.get("username")
-	if not name == None:
-		sql = "SELECT * FROM users WHERE name=:name AND (status=2 OR status=1)"
-		result = db.session.execute(sql, {"name":name}).fetchone()
-		if not result == None:
-			#TODO: Tarkistus käyttäjän admin-statuksesta
-			msg = session["message"]
-			session["message"] = "nothingtoseehere"
-			sql1 = "SELECT perms FROM users WHERE name=:name"
-			result = db.session.execute(sql1, {"name":name}).fetchone()
-			userperms = result[0]
-			sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t'),(SELECT COUNT(*) FROM joiners AS J WHERE J.table_id=T.id AND tojoin='t') FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%'"
-			poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
-			sql3 = "SELECT Q.table_id,U.name,Q.arrived FROM queue AS Q LEFT OUTER JOIN users AS U ON (Q.user_id=U.id) WHERE Q.inqueue='t'"
-			userlista = db.session.execute(sql3).fetchall()
-			sql4 = "SELECT J.table_id,U.name,J.arrived FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.tojoin='t'"
-			valmislista = db.session.execute(sql4).fetchall()
-			return render_template("control.html", poytalista=poytalista, msg=msg, userlista=userlista, valmislista=valmislista)
-	return render_template("nopermission.html")
+	allow = False
+	if onkoAdmin():
+		allow = True
+	elif onkoTyontekija():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	msg = session["message"]
+	session["message"] = "nothingtoseehere"
+	sql1 = "SELECT perms FROM users WHERE name=:name"
+	result = db.session.execute(sql1, {"name":name}).fetchone()
+	userperms = result[0]
+	sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t'),(SELECT COUNT(*) FROM joiners AS J WHERE J.table_id=T.id AND tojoin='t') FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%'"
+	poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
+	sql3 = "SELECT Q.table_id,U.name,Q.arrived FROM queue AS Q LEFT OUTER JOIN users AS U ON (Q.user_id=U.id) WHERE Q.inqueue='t'"
+	userlista = db.session.execute(sql3).fetchall()
+	sql4 = "SELECT J.table_id,U.name,J.arrived FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.tojoin='t'"
+	valmislista = db.session.execute(sql4).fetchall()
+	return render_template("control.html", poytalista=poytalista, msg=msg, userlista=userlista, valmislista=valmislista)
 
 #control/join/tableid: Toteuttaa pelaajan lisäämisen pöytään työntekijän toimesta ilman käyntiä jonossa
 @app.route("/control/join/<string:tableid>", methods=["GET","POST"])
 def jointable(tableid):
+	allow = False
+        if onkoAdmin():
+                allow = True
+        elif onkoTyontekija():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
 	sql = "UPDATE tables SET players=players+1 WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
@@ -178,6 +213,13 @@ def jointable(tableid):
 #control/remove/tableid: Toteuttaa pelaajan poistamisen pöydästä
 @app.route("/control/remove/<string:tableid>", methods=["GET","POST"])
 def removefromtable(tableid):
+	allow = False
+        if onkoAdmin():
+                allow = True
+        elif onkoTyontekija():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
 	sql = "UPDATE tables SET players=players-1 WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
@@ -186,6 +228,13 @@ def removefromtable(tableid):
 #control/open/tableid: Toteuttaa pöydän avaamisen
 @app.route("/control/open/<string:tableid>", methods=["GET","POST"])
 def opentable(tableid):
+	allow = False
+        if onkoAdmin():
+                allow = True
+        elif onkoTyontekija():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
 	sql = "UPDATE tables SET open='t' WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
@@ -194,6 +243,13 @@ def opentable(tableid):
 #control/close/tableid: Toteuttaa pöydän sulkemisen
 @app.route("/control/close/<string:tableid>", methods=["GET","POST"])
 def closetable(tableid):
+	allow = False
+        if onkoAdmin():
+                allow = True
+        elif onkoTyontekija():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
 	sql = "UPDATE tables SET open='f' WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
@@ -202,9 +258,16 @@ def closetable(tableid):
 #control/next/tableid: Toteuttaa pelaajan siirron jonosta liittymään
 @app.route("/control/next/<string:tableid>", methods=["GET","POST"])
 def nextfromqueue(tableid):
+	allow = False
+        if onkoAdmin():
+                allow = True
+        elif onkoTyontekija():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
 	sql = "SELECT id FROM queue WHERE table_id=:tableid AND inqueue='t'"
 	result = db.session.execute(sql, {"tableid":tableid}).fetchone()
-	if result[0] is None:
+	if not result:
 		return redirect("/control/next/fail")
 	jonoid = result[0]
 	sql1 = "SELECT user_id FROM queue WHERE id=:jonoid"
@@ -228,12 +291,26 @@ def nextfromqueue(tableid):
 #TODO: kaikki
 @app.route("/control/next/fail", methods=["GET","POST"])
 def nextfail():
+	allow = False
+        if onkoAdmin():
+                allow = True
+        elif onkoTyontekija():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
 	session["message"] = "Käyttäjää ei voitu siirtää jonosta valmistautumaan, koska jonossa ei ole yhtään käyttäjää"
 	return redirect("/control")
 
 #control/arrival/tableid: Toteuttaa pelaajan siirron valmistautumasta pöytään
 @app.route("/control/arrival/<string:tableid>", methods=["GET","POST"])
 def arrival(tableid):
+	allow = False
+        if onkoAdmin():
+                allow = True
+        elif onkoTyontekija():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
 	sqlx = "SELECT COUNT(*) FROM joiners WHERE table_id=:tableid AND tojoin='t'"
 	result = db.session.execute(sqlx, {"tableid":tableid}).fetchone()
 	if result[0] == 1:
@@ -258,6 +335,13 @@ def arrival(tableid):
 #control/arrival/add/tableid: Toteuttaa listasta valitun pelaajan siirtämisen pöytään
 @app.route("/control/arrival/add/<string:joinid>", methods=["GET","POST"])
 def arrivaladd(joinid):
+	allow = False
+        if onkoAdmin():
+                allow = True
+        elif onkoTyontekija():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
 	sqly = "SELECT U.name FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.id=:joinid"
 	result = db.session.execute(sqly, {"joinid":joinid}).fetchone()
 	uname = result[0]
@@ -270,7 +354,7 @@ def arrivaladd(joinid):
 	db.session.execute(sql1, {"tableid":tableid})
 	db.session.commit()
 	sql2 = "SELECT name FROM tables WHERE id=:tableid"
-	result = db.session.execute(sql2, {"tableid":tableid})
+	result = db.session.execute(sql2, {"tableid":tableid}).fetchone()
 	tname = result[0]
 	session["message"] = uname + " siirtyi pöytään:  " + tname
 	return redirect("/control")

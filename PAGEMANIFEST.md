@@ -16,7 +16,7 @@
  - Jonoon liittyminen:	/lista/poyta/<tableid>		Tehty, testattu
  - Tyhjä kenttä:	/register/emptyfield		Tehty, testattu
  - Jonossa jo:		/queuefail			Tehty, testattu
- - Saapuvista pöytään:	/control/arrival/<tableid>	Tehty, ei testattu
+ - Saapuvista pöytään:	/control/arrival/<tableid>	Tehty, testattu
 
 *Redirect-sivut*  
   
@@ -29,7 +29,7 @@
  - Sisäänkirjautuminen:	/login/redirect			Tehty, testattu  
  - Uloskirjautuminen :  /logout				Tehty, testattu  
  - Rekisteröityminen:	/register/redirect		Tehty, testattu
- - Saapuvan valinta:	/control/arrival/add/joinid	Tehty, ei testattu
+ - Saapuvan valinta:	/control/arrival/add/joinid	Tehty, testattu
     
 *.html-pohjat*  
   
@@ -37,7 +37,7 @@
  - /register		register.html                   Tehty, posilukien salasanan vahvistus -kentän toteutus, testattu  
  - /lista		lista.html                      Esiversio tehty ja testattu, joitakin suunniteltuja ominaisuuksia puuttuu  
  - /lista/<salinnimi>	salinnimi.html                  Tehty, testattu
- - /control		control.html                    Osittain tehty, tehdyt toiminnot testattu
+ - /control		control.html                    Tehty, testattu
  - /control		nopermission.html		Tehty, testattu  
  - /admin		admin.html                      Ei aloitettu  
  - /admin/addUser	addUser.html                    Ei aloitettu  
