@@ -134,7 +134,7 @@ def salinnimi(salinnimi):
 	sql = "SELECT id FROM locations WHERE name=:salinnimi"
 	result = db.session.execute(sql, {"salinnimi":salinnimi}).fetchone()
 	salid = result[0]
-	sql2 = "SELECT T.id,T.name,T.game,T.betsize,T.players,T.seattotal,(SELECT COUNT(Q.id) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue = TRUE) FROM tables AS T WHERE T.location_id=:salid"
+	sql2 = "SELECT T.id,T.name,T.game,T.betsize,T.players,T.seattotal,(SELECT COUNT(Q.id) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue = TRUE) FROM tables AS T WHERE T.location_id=:salid ORDER BY T.id"
 	resu2 = db.session.execute(sql2, {"salid":salid})
 	poytalista = resu2.fetchall()
 	return render_template("salinnimi.html", salinnimi=salinnimi, poytalista=poytalista)
@@ -146,13 +146,15 @@ def tableid(tableid):
 	sql = "SELECT id FROM users WHERE name=:name"
 	result = db.session.execute(sql, {"name":name}).fetchone()
 	userid = result[0]
-	sqlx = "SELECT * FROM queue WHERE user_id=:userid AND table_id=:tableid AND inqueue='t'"
+	sqlx = "SELECT * FROM queue WHERE (user_id=:userid AND table_id=:tableid) AND inqueue='t'"
 	result = db.session.execute(sqlx, {"userid":userid,"tableid":tableid}).fetchone()
 	if not result == None:
+		print(result)
 		return redirect("/queuefail")
-	sqly = "SELECT * FROM joiners WHERE user_id=:userid AND table_id=:tableid AND tojoin='t'"
+	sqly = "SELECT * FROM joiners WHERE (user_id=:userid AND table_id=:tableid) AND tojoin='t'"
 	result = db.session.execute(sqly, {"userid":userid,"tableid":tableid}).fetchone()
 	if not result == None:
+		print(result)
 		return redirect("/queuefail")
 	sql2 = "INSERT INTO queue(user_id,table_id,inqueue,arrived) VALUES(:userid,:tableid,TRUE,LOCALTIMESTAMP)"
 	db.session.execute(sql2, {"userid":userid,"tableid":tableid})
@@ -188,11 +190,11 @@ def control():
 	sql1 = "SELECT perms FROM users WHERE name=:name"
 	result = db.session.execute(sql1, {"name":name}).fetchone()
 	userperms = result[0]
-	sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t'),(SELECT COUNT(*) FROM joiners AS J WHERE J.table_id=T.id AND tojoin='t') FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%'"
+	sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t'),(SELECT COUNT(*) FROM joiners AS J WHERE J.table_id=T.id AND tojoin='t') FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%' ORDER BY T.id"
 	poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
-	sql3 = "SELECT Q.table_id,U.name,Q.arrived FROM queue AS Q LEFT OUTER JOIN users AS U ON (Q.user_id=U.id) WHERE Q.inqueue='t'"
+	sql3 = "SELECT Q.table_id,U.name,Q.arrived FROM queue AS Q LEFT OUTER JOIN users AS U ON (Q.user_id=U.id) WHERE Q.inqueue='t' ORDER BY Q.arrived"
 	userlista = db.session.execute(sql3).fetchall()
-	sql4 = "SELECT J.table_id,U.name,J.arrived FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.tojoin='t'"
+	sql4 = "SELECT J.table_id,U.name,J.arrived FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.tojoin='t' ORDER BY J.arrived"
 	valmislista = db.session.execute(sql4).fetchall()
 	return render_template("control.html", poytalista=poytalista, msg=msg, userlista=userlista, valmislista=valmislista)
 
