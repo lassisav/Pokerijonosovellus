@@ -394,21 +394,73 @@ def admin():
 		allow = True
 	if not allow:
 		return render_template("nopermission.html")
+	msg = session["message"]
+	session["message"] = "nothingtoseehere"
 	uname = session["username"]
-	return render_template("admin.html", uname=uname)
+	return render_template("admin.html", uname=uname, msg=msg)
 
 #admin/addUser: Käyttäjän lisääminen ylläpitäjän toimesta
-@app.route("/admin/addUser", methods="POST")
+@app.route("/admin/addUser", methods=["POST","GET"])
 def adminadduser():
 	allow = False
-        if onkoAdmin():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
-	return render_template("adminadduser.html")
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	sql = "SELECT code, name FROM locations"
+	salilista = db.session.execute(sql).fetchall()
+	return render_template("adminadduser.html", salilista=salilista)
+
+#admin/addUser/redirect: Toteuttaa käyttäjän lisäämisen ylläpitäjän toimesta
+@app.route("/admin/addUser/redirect", methods=["POST","GET"])
+def adminadduserredirect():
+	allow = False
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	reguser = request.form["reguser"]
+	regpass = request.form["regpass"]
+	status = int(request.form["status"])
+	print(status)
+	permslist = request.form.getlist("perms")
+	if not permslist:
+		perms = ""
+		if status == 2:
+			session["message"] = "Määritä työntekijälle annettavat pelisalioikeudet"
+			return redirect("/admin")
+	else:
+		perms = ""
+		for i in permslist:
+			perms = perms + i
+	if not reguser or not regpass:
+		session["message"] = "Virheellinen käyttäjänimi tai salasana, käyttäjän luominen epäonnistui"
+		return redirect("/admin")
+	sql1 = "SELECT name FROM users WHERE name=:reguser"
+	result = db.session.execute(sql1, {"reguser":reguser})
+	regu = result.fetchone()
+	if regu == None:
+		hash_value = generate_password_hash(regpass)
+		if status == 2:
+			sql2 = "INSERT INTO users(name,pass,created,status,perms) VALUES(:reguser,:password,LOCALTIMESTAMP,2,:perms)"
+			db.session.execute(sql2, {"reguser":reguser,"password":hash_value,"perms":perms})
+			db.session.commit();
+		elif status == 1:
+			sql3 = "INSERT INTO users(name,pass,created,status,perms) VALUES(:reguser,:password,LOCALTIMESTAMP,1,'admin')"
+			db.session.execute(sql3, {"reguser":reguser,"password":hash_value})
+			db.session.commit();
+		else:
+			sql4 = "INSERT INTO users(name,pass,created,status,perms) VALUES(:reguser,:password,LOCALTIMESTAMP,3,'luser')"
+			db.session.execute(sql4, {"reguser":reguser,"password":hash_value})
+			db.session.commit();
+		session["message"] = "Uuden käyttäjän luominen onnistui"
+		return redirect("/admin")
+	else:
+		session["message"] = "Valittu käyttäjänimi on jo käytössä"
+		return redirect("/admin")
 
 #admin/removeUser: Käyttäjä poistaminen ylläpitäjän toimesta
-@app.route("/admin/removeUser", methods="POST")
+@app.route("/admin/removeUser", methods=["POST"])
 def adminremoveuser():
         allow = False
         if onkoAdmin():
@@ -418,7 +470,7 @@ def adminremoveuser():
         return render_template("adminremoveuser.html")
 
 #admin/addLocation: Salin lisääminen ylläpitäjän toimesta
-@app.route("/admin/addLocation", methods="POST")
+@app.route("/admin/addLocation", methods=["POST"])
 def adminaddlocation():
         allow = False
         if onkoAdmin():
@@ -428,7 +480,7 @@ def adminaddlocation():
         return render_template("adminaddlocation.html")
 
 #admin/removeLocation: Salin poistaminen ylläpitäjän toimesta
-@app.route("/admin/removeLocation", methods="POST")
+@app.route("/admin/removeLocation", methods=["POST"])
 def adminremovelocation():
         allow = False
         if onkoAdmin():
@@ -438,7 +490,7 @@ def adminremovelocation():
         return render_template("adminremovelocation.html")
 
 #admin/editUser: Käyttäjätietojen muokkaaminen ylläpitäjän toimesta
-@app.route("/admin/editUser", methods="POST")
+@app.route("/admin/editUser", methods=["POST"])
 def adminedituser():
         allow = False
         if onkoAdmin():

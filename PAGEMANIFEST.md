@@ -7,8 +7,8 @@
  - Lista pelisaleista:				/lista				Tehty ja testattu, salikohtainen pöytätilanne puuttuu
  - Pelisalin sivu:				/lista/<salinnimi>		Tehty, testattu
  - Kontrollisivu:				/control			Osittain tehty (toiminnot joihin ei kuulu pöytätietojen muokkaaminen), tehdyt toiminnot testattu 
- - Ylläpitosivu:				/admin				Tehty, ei testattu
- - Käyttäjän lisäys:				/admin/addUser			Placeholder luotu
+ - Ylläpitosivu:				/admin				Tehty, testattu
+ - Ylläpitäjä, käyttäjän lisäys:		/admin/addUser			Tehty, testattu
  - Käyttäjän poisto:				/admin/removeUser		Placeholder luotu
  - Salin lisäys:				/admin/addLocation		Placeholder luotu
  - Salin poisto:				/admin/removeLocation		Placeholder luotu
@@ -35,6 +35,7 @@
  - Uloskirjautuminen:				/logout				Tehty, testattu  
  - Rekisteröityminen:				/register/redirect		Tehty, testattu
  - Saapuvan valinta:				/control/arrival/add/joinid	Tehty, testattu
+ - Ylläpitäjä, käyttäjän lisäys:		/admin/addUser/redirect		Tehty, testattu
     
 *.html-pohjat*  
   
@@ -44,8 +45,8 @@
  - /lista/<salinnimi>				salinnimi.html                  Tehty, testattu
  - /control					control.html                    Tehty, testattu
  - /control					nopermission.html		Tehty, testattu  
- - /admin					admin.html                      Tehty, ei testattu  
- - /admin/addUser				addUser.html                    Placeholder luotu
+ - /admin					admin.html                      Tehty, testattu  
+ - /admin/addUser				addUser.html                    Tehty, testattu
  - /admin/removeUser				removeUser.html			Placeholder luotu
  - /admin/addLocation				addLocation.html		Placeholder luotu
  - /admin/removeLocation			removeLocation.html		Placeholder luotu

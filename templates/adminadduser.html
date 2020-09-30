@@ -1,2 +1,16 @@
-TBA 2020
-
+Käyttäjän lisääminen:<br>
+<form action="/admin/addUser/redirect" method="POST">
+<p>Käyttäjänimi:<br>
+<input type="text" name="reguser"></p><br>
+<p>Salasana:<br>
+<input type="password" name="regpass"></p><br>
+<p>Käyttäjäluokka:<br>
+<input type="radio" name="status" value="1"> Ylläpitäjä
+<input type="radio" name="status" value="2"> Työntekijä
+<input type="radio" name="status" value="3"> Pelaaja
+<p>Jos olet luomassa työntekijäkäyttäjää, valitse tästä salit joihin työntekijä saa oikeudet:<br>
+{% for s in salilista %}
+<input type="checkbox" name="perms" value="{{ s[0] }}"> {{ s[1] }}
+{% endfor %}
+<input type="submit" value="Lisää käyttäjä">
+</form>

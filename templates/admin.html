@@ -6,6 +6,9 @@ TODO: Salin lisäys
 TODO: Salin poisto
 TODO: Käyttäjäoikeuksien muuttaminen
 -->
+{% if msg != "nothingtoseehere" %}
+        {{ msg }}<br>
+{% endif %}
 Tervetuloa ylläpitosivulle {{ uname }}
 <form action="/admin/addUser" method="POST">
 <input type="submit" value="Lisää käyttäjä">
