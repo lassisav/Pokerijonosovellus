@@ -385,3 +385,11 @@ def arrivaladd(joinid):
 	tname = result[0]
 	session["message"] = uname + " siirtyi pöytään:  " + tname
 	return redirect("/control")
+
+#Ylläpitosivu: Näyttää ylläpitäjäkäyttäjälle ylläpitotoiminnot
+@app.route("/admin", methods=["GET","POST"])
+def admin():
+	allow = False
+	if onkoAdmin():
+		allow = True
+	return render_template("admin.html")
