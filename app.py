@@ -513,6 +513,37 @@ def adminaddlocation():
                 return render_template("nopermission.html")
         return render_template("adminaddlocation.html")
 
+#admin/addLocation/redirect: Toteuttaa salin lisäämisen ylläpitäjän toimesta
+@app.route("/admin/addLocation/redirect", methods=["POST","GET"])
+def adminaddlocationredirect():
+	allow = False
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	toaddname = request.form["toaddname"]
+	toaddcode = request.form["toaddcode"]
+	toaddname = toaddname.lower()
+	toaddname = toaddname.capitalize()
+	toaddcode = toaddcode.lower()
+	if not toaddname:
+		session["message"] = "Pelisalin lisääminen epäonnistui: Pelisalilla ei ollut nimeä"
+		return redirect("/admin")
+	if not len(toaddcode) == 4:
+		session["message"] = "Pelisalin lisääminen epäonnistui: Pelisalin koodi virheellinen"
+		return redirect("/admin")
+	sql = "SELECT COUNT(*) FROM locations WHERE LOWER(code)=LOWER(:toaddcode) OR LOWER(name)=LOWER(:toaddname)"
+	result = db.session.execute(sql, {"toaddcode":toaddcode, "toaddname":toaddname}).fetchone()
+	proofcheck = result[0]
+	if not proofcheck == 0:
+		session["message"] = "Pelisalin lisääminen epäonnistui: Nimi tai koodi käytössä"
+		return redirect("/admin")
+	sql1 = "INSERT INTO locations(name,code) VALUES (:toaddname,:toaddcode)"
+	db.session.execute(sql1, {"toaddcode":toaddcode, "toaddname":toaddname})
+	db.session.commit()
+	session["message"] = "Lisättiin sali " + toaddname + " koodilla " + toaddcode
+	return redirect("/admin")
+
 #admin/removeLocation: Salin poistaminen ylläpitäjän toimesta
 @app.route("/admin/removeLocation", methods=["POST"])
 def adminremovelocation():

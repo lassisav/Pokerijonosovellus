@@ -10,7 +10,7 @@
  - Ylläpitosivu:				/admin				Tehty, testattu
  - Ylläpitäjä, käyttäjän lisäys:		/admin/addUser			Tehty, testattu
  - Ylläpitäjä, käyttäjän poisto:		/admin/removeUser		Tehty, testattu
- - Salin lisäys:				/admin/addLocation		Placeholder luotu
+ - Ylläpitäjä, salin lisäys:			/admin/addLocation		Tehty, testattu
  - Salin poisto:				/admin/removeLocation		Placeholder luotu
  - Käyttäjoikeuksien muokkaaminen		/admin/editUser			Placeholder luotu
  - Tyhjä nimi tai salasana:			/register/emptyfield		Tehty, testattu
@@ -37,6 +37,7 @@
  - Saapuvan valinta:				/control/arrival/add/joinid	Tehty, testattu
  - Ylläpitäjä, käyttäjän lisäys:		/admin/addUser/redirect		Tehty, testattu
  - Ylläpitäjä, käyttäjän poisto:		/admin/removeUser/redirect	Tehty, testattu
+ - Ylläpitäjä, salin lisäys:			/admin/addLocation/redirect	Tehty, testattu
 
 *.html-pohjat*  
   
@@ -49,7 +50,7 @@
  - /admin					admin.html                      Tehty, testattu  
  - /admin/addUser				addUser.html                    Tehty, testattu
  - /admin/removeUser				removeUser.html			Tehty, testattu
- - /admin/addLocation				addLocation.html		Placeholder luotu
+ - /admin/addLocation				addLocation.html		Tehty, testattu
  - /admin/removeLocation			removeLocation.html		Placeholder luotu
  - /admin/editUser				editUser.html			Placeholder luotu
  - /login					login.html			Tehty, testattu  
