@@ -7,12 +7,12 @@
  - Lista pelisaleista:				/lista				Tehty ja testattu, salikohtainen pöytätilanne puuttuu
  - Pelisalin sivu:				/lista/<salinnimi>		Tehty, testattu
  - Kontrollisivu:				/control			Osittain tehty (toiminnot joihin ei kuulu pöytätietojen muokkaaminen), tehdyt toiminnot testattu 
- - Ylläpitosivu:				/admin				Placeholder tehty  
- - Käyttäjän lisäys:				/admin/addUser			Ei aloitettu  
- - Käyttäjän poisto:				/admin/removeUser		Ei aloitettu  
- - Salin lisäys:				/admin/addLocation		Ei aloitettu
- - Salin poisto:				/admin/removeLocation		Ei aloitettu  
- - Käyttäjoikeuksien muokkaaminen		/admin/editUser			Ei aloitettu
+ - Ylläpitosivu:				/admin				Tehty, ei testattu
+ - Käyttäjän lisäys:				/admin/addUser			Placeholder luotu
+ - Käyttäjän poisto:				/admin/removeUser		Placeholder luotu
+ - Salin lisäys:				/admin/addLocation		Placeholder luotu
+ - Salin poisto:				/admin/removeLocation		Placeholder luotu
+ - Käyttäjoikeuksien muokkaaminen		/admin/editUser			Placeholder luotu
  - Tyhjä nimi tai salasana:			/register/emptyfield		Tehty, testattu
  - Käyttäjänimi käytössä:			/register/nametaken		Tehty, testattu  
  - Rekisteröinti onnistui:			/register/success		Tehty, testattu  
@@ -44,12 +44,12 @@
  - /lista/<salinnimi>				salinnimi.html                  Tehty, testattu
  - /control					control.html                    Tehty, testattu
  - /control					nopermission.html		Tehty, testattu  
- - /admin					admin.html                      Placeholder tehty  
- - /admin/addUser				addUser.html                    Ei aloitettu  
- - /admin/removeUser				removeUser.html			Ei aloitettu  
- - /admin/addLocation				addLocation.html		Ei aloitettu
- - /admin/removeLocation			removeLocation.html		Ei aloitettu  
- - /admin/editUser				editUser.html			Ei aloitettu
+ - /admin					admin.html                      Tehty, ei testattu  
+ - /admin/addUser				addUser.html                    Placeholder luotu
+ - /admin/removeUser				removeUser.html			Placeholder luotu
+ - /admin/addLocation				addLocation.html		Placeholder luotu
+ - /admin/removeLocation			removeLocation.html		Placeholder luotu
+ - /admin/editUser				editUser.html			Placeholder luotu
  - /login					login.html			Tehty, testattu  
  - /register/nametaken				nametaken.html			Tehty, testattu  
  - /register/success				registersuccess.html		Tehty, testattu 

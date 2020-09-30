@@ -6,4 +6,20 @@ TODO: Salin lisäys
 TODO: Salin poisto
 TODO: Käyttäjäoikeuksien muuttaminen
 -->
-TBA 2020
+Tervetuloa ylläpitosivulle {{ uname }}
+<form action="/admin/addUser" method="POST">
+<input type="submit" value="Lisää käyttäjä">
+</form><br>
+<form action="/admin/removeUser" method="POST">
+<input type="submit" value="Poista käyttäjä">
+</form><br>
+<form action="/admin/addLocation" method="POST">
+<input type="submit" value="Lisää sali">
+</form><br>
+<form action="/admin/removeLocation" method="POST">
+<input type="submit" value="Poista sali">
+</form><br>
+<form action="/admin/editUser" method="POST">
+<input type="submit" value="Muokkaa käyttäjän oikeuksia">
+</form><br>
+

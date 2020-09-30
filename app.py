@@ -392,4 +392,57 @@ def admin():
 	allow = False
 	if onkoAdmin():
 		allow = True
-	return render_template("admin.html")
+	if not allow:
+		return render_template("nopermission.html")
+	uname = session["username"]
+	return render_template("admin.html", uname=uname)
+
+#admin/addUser: Käyttäjän lisääminen ylläpitäjän toimesta
+@app.route("/admin/addUser", methods="POST")
+def adminadduser():
+	allow = False
+        if onkoAdmin():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
+	return render_template("adminadduser.html")
+
+#admin/removeUser: Käyttäjä poistaminen ylläpitäjän toimesta
+@app.route("/admin/removeUser", methods="POST")
+def adminremoveuser():
+        allow = False
+        if onkoAdmin():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
+        return render_template("adminremoveuser.html")
+
+#admin/addLocation: Salin lisääminen ylläpitäjän toimesta
+@app.route("/admin/addLocation", methods="POST")
+def adminaddlocation():
+        allow = False
+        if onkoAdmin():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
+        return render_template("adminaddlocation.html")
+
+#admin/removeLocation: Salin poistaminen ylläpitäjän toimesta
+@app.route("/admin/removeLocation", methods="POST")
+def adminremovelocation():
+        allow = False
+        if onkoAdmin():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
+        return render_template("adminremovelocation.html")
+
+#admin/editUser: Käyttäjätietojen muokkaaminen ylläpitäjän toimesta
+@app.route("/admin/editUser", methods="POST")
+def adminedituser():
+        allow = False
+        if onkoAdmin():
+                allow = True
+        if not allow:
+                return render_template("nopermission.html")
+        return render_template("adminedituser.html")
