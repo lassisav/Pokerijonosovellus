@@ -9,7 +9,7 @@
  - Kontrollisivu:				/control			Osittain tehty (toiminnot joihin ei kuulu pöytätietojen muokkaaminen), tehdyt toiminnot testattu 
  - Ylläpitosivu:				/admin				Tehty, testattu
  - Ylläpitäjä, käyttäjän lisäys:		/admin/addUser			Tehty, testattu
- - Käyttäjän poisto:				/admin/removeUser		Placeholder luotu
+ - Ylläpitäjä, käyttäjän poisto:		/admin/removeUser		Tehty, testattu
  - Salin lisäys:				/admin/addLocation		Placeholder luotu
  - Salin poisto:				/admin/removeLocation		Placeholder luotu
  - Käyttäjoikeuksien muokkaaminen		/admin/editUser			Placeholder luotu
@@ -36,7 +36,8 @@
  - Rekisteröityminen:				/register/redirect		Tehty, testattu
  - Saapuvan valinta:				/control/arrival/add/joinid	Tehty, testattu
  - Ylläpitäjä, käyttäjän lisäys:		/admin/addUser/redirect		Tehty, testattu
-    
+ - Ylläpitäjä, käyttäjän poisto:		/admin/removeUser/redirect	Tehty, testattu
+
 *.html-pohjat*  
   
  - /						index.html                      Tehty, testattu  
@@ -47,7 +48,7 @@
  - /control					nopermission.html		Tehty, testattu  
  - /admin					admin.html                      Tehty, testattu  
  - /admin/addUser				addUser.html                    Tehty, testattu
- - /admin/removeUser				removeUser.html			Placeholder luotu
+ - /admin/removeUser				removeUser.html			Tehty, testattu
  - /admin/addLocation				addLocation.html		Placeholder luotu
  - /admin/removeLocation			removeLocation.html		Placeholder luotu
  - /admin/editUser				editUser.html			Placeholder luotu

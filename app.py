@@ -459,7 +459,7 @@ def adminadduserredirect():
 		session["message"] = "Valittu käyttäjänimi on jo käytössä"
 		return redirect("/admin")
 
-#admin/removeUser: Käyttäjä poistaminen ylläpitäjän toimesta
+#admin/removeUser: Käyttäjän poistaminen ylläpitäjän toimesta
 @app.route("/admin/removeUser", methods=["POST"])
 def adminremoveuser():
         allow = False
@@ -468,6 +468,40 @@ def adminremoveuser():
         if not allow:
                 return render_template("nopermission.html")
         return render_template("adminremoveuser.html")
+
+#admin/removeUser/redirect: Toteuttaa käyttäjän poistamisen ylläpitäjän toimesta
+@app.route("/admin/removeUser/redirect", methods=["POST"])
+def adminremoveuserredirect():
+	allow = False
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	todelname = request.form["todel"]
+	sql = "SELECT id FROM users WHERE name=:todelname"
+	result = db.session.execute(sql, {"todelname":todelname}).fetchone()
+	todelid = result[0]
+	sql1 = "SELECT table_id FROM joiners WHERE user_id=:todelid AND tojoin='t'"
+	result = db.session.execute(sql1, {"todelid":todelid}).fetchall()
+	if result:
+		session["message"] = "Käyttäjää ei voitu poistaa, koska käyttäjä on liittymässä pöytään"
+		return redirect("/admin")
+	sql2 = "SELECT table_id FROM queue WHERE user_id=:todelid AND inqueue='t'"
+	result = db.session.execute(sql2, {"todelid":todelid}).fetchall()
+	if result:
+		session["message"] = "Käyttäjää ei voitu poistaa, koska käyttäjä on liittymässä pöytään"
+		return redirect("/admin")
+	sql3 = "DELETE FROM users WHERE id=:todelid"
+	sql4 = "UPDATE users SET id=id-1 WHERE id>:todelid"
+	sql5 = "UPDATE queue SET user_id=user_id-1 WHERE user_id>:todelid"
+	sql6 = "UPDATE joiners SET user_id=user_id-1 WHERE user_id>:todelid"
+	db.session.execute(sql3, {"todelid":todelid})
+	db.session.execute(sql4, {"todelid":todelid})
+	db.session.execute(sql5, {"todelid":todelid})
+	db.session.execute(sql6, {"todelid":todelid})
+	db.session.commit()
+	session["message"] = "Käyttäjä " + todelname + " poistettiin"
+	return redirect("/admin")
 
 #admin/addLocation: Salin lisääminen ylläpitäjän toimesta
 @app.route("/admin/addLocation", methods=["POST"])
