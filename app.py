@@ -208,9 +208,18 @@ def jointable(tableid):
 		allow = True
 	if not allow:
 		return render_template("nopermission.html")
-	sql = "UPDATE tables SET players=players+1 WHERE id=:tableid"
-	db.session.execute(sql, {"tableid":tableid})
-	db.session.commit()
+	sqlx = "SELECT players FROM tables WHERE id=:tableid"
+	result = db.session.execute(sqlx, {"tableid":tableid}).fetchone()
+	luku = result[0]
+	sqly = "SELECT seattotal FROM tables WHERE id=:tableid"
+	result = db.session.execute(sqly, {"tableid":tableid}).fetchone()
+	total = result[0]
+	if luku == total:
+		session["message"] = "Pöytä täynnä, pelaajaa ei lisätty"
+	else:
+		sql = "UPDATE tables SET players=players+1 WHERE id=:tableid"
+		db.session.execute(sql, {"tableid":tableid})
+		db.session.commit()
 	return redirect("/control")
 
 #control/remove/tableid: Toteuttaa pelaajan poistamisen pöydästä
@@ -223,9 +232,15 @@ def removefromtable(tableid):
 		allow = True
 	if not allow:
 		return render_template("nopermission.html")
-	sql = "UPDATE tables SET players=players-1 WHERE id=:tableid"
-	db.session.execute(sql, {"tableid":tableid})
-	db.session.commit()
+	sqlx = "SELECT players FROM tables WHERE id=:tableid"
+	result = db.session.execute(sqlx, {"tableid":tableid}).fetchone()
+	luku = result[0]
+	if luku == 0:
+		session["message"] = "Pöytä tyhjä, pelaajaa ei voitu poistaa"
+	else:
+		sql = "UPDATE tables SET players=players-1 WHERE id=:tableid"
+		db.session.execute(sql, {"tableid":tableid})
+		db.session.commit()
 	return redirect("/control")
 
 #control/open/tableid: Toteuttaa pöydän avaamisen
@@ -314,6 +329,15 @@ def arrival(tableid):
 		allow = True
 	if not allow:
 		return render_template("nopermission.html")
+	sqly = "SELECT players FROM tables WHERE id=:tableid"
+	result = db.session.execute(sqly, {"tableid":tableid}).fetchone()
+	luku = result[0]
+	sqlz = "SELECT seattotal FROM tables WHERE id=:tableid"
+	result = db.session.execute(sqlz, {"tableid":tableid}).fetchone()
+	total = result[0]
+	if luku == total:
+		session["message"] = "Pelaajaa ei voida siirtää pöytään, koska pöytä on täynnä"
+		return redirect("/control")
 	sqlx = "SELECT COUNT(*) FROM joiners WHERE table_id=:tableid AND tojoin='t'"
 	result = db.session.execute(sqlx, {"tableid":tableid}).fetchone()
 	if result[0] == 1:
