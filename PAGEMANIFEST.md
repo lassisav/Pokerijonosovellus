@@ -11,8 +11,8 @@
  - Ylläpitäjä, käyttäjän lisäys:		/admin/addUser				Tehty, testattu
  - Ylläpitäjä, käyttäjän poisto:		/admin/removeUser			Tehty, testattu
  - Ylläpitäjä, salin lisäys:			/admin/addLocation			Tehty, testattu
- - Salin poisto:				/admin/removeLocation			Tehty, testattu
- - Käyttäjoikeuksien muokkaaminen		/admin/editUser				Placeholder luotu
+ - Ylläpitäjä, salin poisto:			/admin/removeLocation			Tehty, testattu
+ - Ylläpitjä, käyttäjoikeuksien muokkaaminen	/admin/editUser				Tehty, testattu
  - Tyhjä nimi tai salasana:			/register/emptyfield			Tehty, testattu
  - Käyttäjänimi käytössä:			/register/nametaken			Tehty, testattu  
  - Rekisteröinti onnistui:			/register/success			Tehty, testattu  
@@ -39,6 +39,7 @@
  - Ylläpitäjä, käyttäjän poisto:		/admin/removeUser/redirect		Tehty, testattu
  - Ylläpitäjä, salin lisäys:			/admin/addLocation/redirect		Tehty, testattu
  - Ylläpitäjä, salin poisto:			/admin/removeLocation/locationid	Tehty, testattu
+ - Ylläpitäjä, käyttäjäoikeuksien muokkaaminen:	/admin/editUser/redirect		Tehty, testattu
 
 *.html-pohjat*  
   
@@ -53,7 +54,7 @@
  - /admin/removeUser				removeUser.html				Tehty, testattu
  - /admin/addLocation				addLocation.html			Tehty, testattu
  - /admin/removeLocation			removeLocation.html			Tehty, testattu
- - /admin/editUser				editUser.html				Placeholder luotu
+ - /admin/editUser				editUser.html				Tehty, testattu
  - /login					login.html				Tehty, testattu  
  - /register/nametaken				nametaken.html				Tehty, testattu  
  - /register/success				registersuccess.html			Tehty, testattu 

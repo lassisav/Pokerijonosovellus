@@ -1,1 +1,16 @@
-TBA 2020
+{% extends "adminlayout.html" %}
+{% block content %}
+<h4>Työntekijän oikeuksien muokkaaminen:</h4><br><br>
+Valitse muokattava työntekijä:<br>
+<form action="/admin/editUser/redirect" method="POST">
+<select name="tochange" id="tochange">
+{% for n in nimilista %}
+<option value="{{ n[0] }}">{{ n[1] }}</option>
+{% endfor %}
+</select><br>
+Valitse työntekijän oikeudet (mukaan lukien säilytettävät):<br>
+{% for s in salilista %}
+<input type="checkbox" name="perms" value="{{ s[0] }}"> {{ s[1] }}
+{% endfor %}
+<input type="submit" value="Muokkaa oikeuksia">
+{% endblock %}

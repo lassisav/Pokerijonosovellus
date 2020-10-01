@@ -414,6 +414,7 @@ def adminadduser():
 	sql = "SELECT code, name FROM locations"
 	salilista = db.session.execute(sql).fetchall()
 	msg = "nothingtoseehere"
+	session["message"] = msg
 	return render_template("adminadduser.html", salilista=salilista, msg=msg)
 
 #admin/addUser/redirect: Toteuttaa käyttäjän lisäämisen ylläpitäjän toimesta
@@ -473,6 +474,7 @@ def adminremoveuser():
 	if not allow:
 		return render_template("nopermission.html")
 	msg = "nothingtoseehere"
+	session["message"] = msg
 	return render_template("adminremoveuser.html",msg=msg)
 
 #admin/removeUser/redirect: Toteuttaa käyttäjän poistamisen ylläpitäjän toimesta
@@ -518,6 +520,7 @@ def adminaddlocation():
 	if not allow:
 		return render_template("nopermission.html")
 	msg = "nothingtoseehere"
+	session["message"] = msg
 	return render_template("adminaddlocation.html",msg=msg)
 
 #admin/addLocation/redirect: Toteuttaa salin lisäämisen ylläpitäjän toimesta
@@ -562,6 +565,7 @@ def adminremovelocation():
 	sql = "SELECT id,name FROM locations"
 	salilista = db.session.execute(sql).fetchall()
 	msg = "nothingtoseehere"
+	session["message"] = msg
 	return render_template("adminremovelocation.html", salilista=salilista,msg=msg)
 
 #admin/removeLocation/locationid
@@ -602,7 +606,7 @@ def adminremovelocationredirect(locationid):
 	session["message"] = "Poistettiin sali " + snimi[0]
 	return redirect("/admin")
 
-#admin/editUser: Käyttäjätietojen muokkaaminen ylläpitäjän toimesta
+#admin/editUser: Työntekijän oikeuksien muokkaaminen ylläpitäjän toimesta
 @app.route("/admin/editUser", methods=["POST"])
 def adminedituser():
 	allow = False
@@ -611,4 +615,33 @@ def adminedituser():
 	if not allow:
 		return render_template("nopermission.html")
 	msg = "nothingtoseehere"
-	return render_template("adminedituser.html",msg=msg)
+	session["message"] = msg
+	sql = "SELECT id,name FROM users WHERE status=2"
+	nimilista = db.session.execute(sql).fetchall()
+	sql1 = "SELECT code,name FROM locations"
+	salilista = db.session.execute(sql1).fetchall()
+	return render_template("adminedituser.html",msg=msg,nimilista=nimilista,salilista=salilista)
+
+#admin/editUser: Toteuttaa työntekijän oikeuksien muokkaamisen
+@app.route("/admin/editUser/redirect", methods=["POST"])
+def adminedituserredirect():
+	allow = False
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	uid = int(request.form["tochange"])
+	permslist = request.form.getlist("perms")
+	perms = ""
+	if not permslist:
+		session["message"] = "Käyttäjäoikeuksien muokkaaminen epäonnistui: käyttäjälle ei valittu yhtään pelisalia"
+		return redirect("/admin")
+	for i in permslist:
+		perms = perms + i
+	sql = "UPDATE users SET perms=:perms WHERE id =:uid"
+	db.session.execute(sql, {"perms":perms,"uid":uid})
+	db.session.commit()
+	sql1 = "SELECT name FROM users WHERE id=:uid"
+	result = db.session.execute(sql1, {"uid":uid}).fetchone()
+	session["message"] = "Muokattiin käyttäjän " + result[0] + " oikeuksia"
+	return redirect("/admin")
