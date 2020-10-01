@@ -1,6 +1,6 @@
 {% extends "adminlayout.html" %}
 {% block content %}
-Salin poistaminen:<br><br>
+<h3>Salin poistaminen</h3><br><br>
 Valitse poistettava sali:<br>
 {% for s in salilista %}
 <form action="/admin/removeLocation/{{ s[0] }}" method="POST">
