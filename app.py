@@ -190,8 +190,12 @@ def control():
 	sql1 = "SELECT perms FROM users WHERE name=:name"
 	result = db.session.execute(sql1, {"name":name}).fetchone()
 	userperms = result[0]
-	sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t'),(SELECT COUNT(*) FROM joiners AS J WHERE J.table_id=T.id AND tojoin='t') FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%' ORDER BY T.id"
-	poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
+	if onkoTyontekija():
+		sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t'),(SELECT COUNT(*) FROM joiners AS J WHERE J.table_id=T.id AND tojoin='t'),L.name FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) WHERE :userperms LIKE '%' || L.code || '%' ORDER BY T.id"
+		poytalista = db.session.execute(sql2, {"userperms":userperms}).fetchall()
+	if onkoAdmin():
+		sql2 = "SELECT T.id,T.name,T.seattotal,T.players,T.location_id,T.open,T.game,T.betsize,(SELECT COUNT(*) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue='t'),(SELECT COUNT(*) FROM joiners AS J WHERE J.table_id=T.id AND tojoin='t'),L.name FROM tables AS T LEFT OUTER JOIN locations AS L ON (T.location_id = L.id) ORDER BY L.id, T.id"
+		poytalista = db.session.execute(sql2).fetchall()
 	sql3 = "SELECT Q.table_id,U.name,Q.arrived FROM queue AS Q LEFT OUTER JOIN users AS U ON (Q.user_id=U.id) WHERE Q.inqueue='t' ORDER BY Q.arrived"
 	userlista = db.session.execute(sql3).fetchall()
 	sql4 = "SELECT J.table_id,U.name,J.arrived FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.tojoin='t' ORDER BY J.arrived"
