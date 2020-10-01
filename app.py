@@ -283,7 +283,7 @@ def nextfromqueue(tableid):
 		allow = True
 	if not allow:
 		return render_template("nopermission.html")
-	sql = "SELECT id FROM queue WHERE table_id=:tableid AND inqueue='t'"
+	sql = "SELECT id FROM queue WHERE table_id=:tableid AND inqueue='t' ORDER BY arrived"
 	result = db.session.execute(sql, {"tableid":tableid}).fetchone()
 	if not result:
 		return redirect("/control/next/fail")
@@ -489,7 +489,7 @@ def adminremoveuserredirect():
 	sql2 = "SELECT table_id FROM queue WHERE user_id=:todelid AND inqueue='t'"
 	result = db.session.execute(sql2, {"todelid":todelid}).fetchall()
 	if result:
-		session["message"] = "Käyttäjää ei voitu poistaa, koska käyttäjä on liittymässä pöytään"
+		session["message"] = "Käyttäjää ei voitu poistaa, koska käyttäjä on jonossa pöytään"
 		return redirect("/admin")
 	sql3 = "DELETE FROM users WHERE id=:todelid"
 	sql4 = "UPDATE users SET id=id-1 WHERE id>:todelid"
@@ -547,12 +547,52 @@ def adminaddlocationredirect():
 #admin/removeLocation: Salin poistaminen ylläpitäjän toimesta
 @app.route("/admin/removeLocation", methods=["POST"])
 def adminremovelocation():
-        allow = False
-        if onkoAdmin():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
-        return render_template("adminremovelocation.html")
+	allow = False
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	sql = "SELECT id,name FROM locations"
+	salilista = db.session.execute(sql).fetchall()
+	return render_template("adminremovelocation.html", salilista=salilista)
+
+#admin/removeLocation/locationid
+@app.route("/admin/removeLocation/<string:locationid>", methods=["POST"])
+def adminremovelocationredirect(locationid):
+	allow = False
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	locationid = int(locationid)
+	sql = "SELECT COUNT(*) FROM tables WHERE location_id=:locationid AND open='t'"
+	result = db.session.execute(sql, {"locationid":locationid}).fetchone()
+	if not result[0] == 0:
+		session["message"] = "Salia ei voitu poistaa, koska salissa on auki olevia pöytiä."
+		return redirect("/admin")
+	sql1 = "SELECT COUNT(*) FROM joiners AS J LEFT OUTER JOIN tables AS T ON J.table_id=T.id WHERE T.location_id=:locationid AND J.tojoin='t'"
+	result = db.session.execute(sql1, {"locationid":locationid}).fetchone()
+	if not result[0] == 0:
+		session["message"] = "Salia ei voitu poistaa, koska salissa olevaan pöytään on liittymässä pelaaja."
+		return redirect("/admin")
+	sql2 = "SELECT COUNT(*) FROM queue AS Q LEFT OUTER JOIN tables AS T ON Q.table_id=T.id WHERE T.location_id=:locationid AND Q.inqueue='t'"
+	result = db.session.execute(sql2, {"locationid":locationid}).fetchone()
+	if not result[0] == 0:
+		session["message"] = "Salia ei voitu poistaa, koska salissa olevaan pöytään on jonoa."
+		return redirect("/admin")
+	sqlx = "SELECT name FROM locations WHERE id=:locationid"
+	snimi = db.session.execute(sqlx, {"locationid":locationid}).fetchone()
+	sql3 = "DELETE FROM locations WHERE id=:locationid"
+	sql4 = "DELETE FROM tables WHERE location_id=:locationid"
+	sql5 = "UPDATE locations SET id=id-1 WHERE id>:locationid"
+	sql6 = "UPDATE tables SET location_id=location_id-1 WHERE id>:locationid"
+	db.session.execute(sql3, {"locationid":locationid})
+	db.session.execute(sql4, {"locationid":locationid})
+	db.session.execute(sql5, {"locationid":locationid})
+	db.session.execute(sql6, {"locationid":locationid})
+	db.session.commit()
+	session["message"] = "Poistettiin sali " + snimi[0]
+	return redirect("/admin")
 
 #admin/editUser: Käyttäjätietojen muokkaaminen ylläpitäjän toimesta
 @app.route("/admin/editUser", methods=["POST"])

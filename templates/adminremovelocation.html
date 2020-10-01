@@ -1,1 +1,7 @@
-TBA 2020
+Salin poistaminen:<br><br>
+Valitse poistettava sali:<br>
+{% for s in salilista %}
+<form action="/admin/removeLocation/{{ s[0] }}" method="POST">
+<input type="submit" value={{ s[1] }}>
+</form>
+{% endfor %}
