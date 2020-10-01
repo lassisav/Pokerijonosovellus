@@ -1,3 +1,5 @@
+{% extends "adminlayout.html" %}
+{% block content %}
 Pelisalin lisääminen:<br><br>
 Syötä pelisalin nimi:
 <form action="/admin/addLocation/redirect" method="POST">
@@ -6,3 +8,4 @@ Syötä pelisalin nelikirjaiminen koodi:
 <input type="text" name="toaddcode"><br>
 <input type="submit" value="Lisää sali">
 </form>
+{% endblock %}

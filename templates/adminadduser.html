@@ -1,3 +1,5 @@
+{% extends "adminlayout.html" %}
+{% block content %}
 Käyttäjän lisääminen:<br>
 <form action="/admin/addUser/redirect" method="POST">
 <p>Käyttäjänimi:<br>
@@ -14,3 +16,4 @@ Käyttäjän lisääminen:<br>
 {% endfor %}
 <input type="submit" value="Lisää käyttäjä">
 </form>
+{% endblock %}

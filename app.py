@@ -413,7 +413,8 @@ def adminadduser():
 		return render_template("nopermission.html")
 	sql = "SELECT code, name FROM locations"
 	salilista = db.session.execute(sql).fetchall()
-	return render_template("adminadduser.html", salilista=salilista)
+	msg = "nothingtoseehere"
+	return render_template("adminadduser.html", salilista=salilista, msg=msg)
 
 #admin/addUser/redirect: Toteuttaa käyttäjän lisäämisen ylläpitäjän toimesta
 @app.route("/admin/addUser/redirect", methods=["POST","GET"])
@@ -466,12 +467,13 @@ def adminadduserredirect():
 #admin/removeUser: Käyttäjän poistaminen ylläpitäjän toimesta
 @app.route("/admin/removeUser", methods=["POST"])
 def adminremoveuser():
-        allow = False
-        if onkoAdmin():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
-        return render_template("adminremoveuser.html")
+	allow = False
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	msg = "nothingtoseehere"
+	return render_template("adminremoveuser.html",msg=msg)
 
 #admin/removeUser/redirect: Toteuttaa käyttäjän poistamisen ylläpitäjän toimesta
 @app.route("/admin/removeUser/redirect", methods=["POST"])
@@ -510,12 +512,13 @@ def adminremoveuserredirect():
 #admin/addLocation: Salin lisääminen ylläpitäjän toimesta
 @app.route("/admin/addLocation", methods=["POST"])
 def adminaddlocation():
-        allow = False
-        if onkoAdmin():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
-        return render_template("adminaddlocation.html")
+	allow = False
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	msg = "nothingtoseehere"
+	return render_template("adminaddlocation.html",msg=msg)
 
 #admin/addLocation/redirect: Toteuttaa salin lisäämisen ylläpitäjän toimesta
 @app.route("/admin/addLocation/redirect", methods=["POST","GET"])
@@ -558,7 +561,8 @@ def adminremovelocation():
 		return render_template("nopermission.html")
 	sql = "SELECT id,name FROM locations"
 	salilista = db.session.execute(sql).fetchall()
-	return render_template("adminremovelocation.html", salilista=salilista)
+	msg = "nothingtoseehere"
+	return render_template("adminremovelocation.html", salilista=salilista,msg=msg)
 
 #admin/removeLocation/locationid
 @app.route("/admin/removeLocation/<string:locationid>", methods=["POST"])
@@ -601,9 +605,10 @@ def adminremovelocationredirect(locationid):
 #admin/editUser: Käyttäjätietojen muokkaaminen ylläpitäjän toimesta
 @app.route("/admin/editUser", methods=["POST"])
 def adminedituser():
-        allow = False
-        if onkoAdmin():
-                allow = True
-        if not allow:
-                return render_template("nopermission.html")
-        return render_template("adminedituser.html")
+	allow = False
+	if onkoAdmin():
+		allow = True
+	if not allow:
+		return render_template("nopermission.html")
+	msg = "nothingtoseehere"
+	return render_template("adminedituser.html",msg=msg)
