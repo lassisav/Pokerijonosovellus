@@ -58,7 +58,7 @@ def loginredirect():
 	ps = result.fetchone()
 	if ps == None:
 		#Tunnusta ei ole
-		return redirect("/login/bad")
+		return render_template("login.html", error = "Tunnusta ei ole")
 	else:
 		hash_value = ps[0]
 		if check_password_hash(hash_value, password):
@@ -72,12 +72,7 @@ def loginredirect():
 			return redirect("/lista")
 		else:
 			#Väärä salasana
-			return redirect("/login/bad")
-
-#login/bad: Kirjautuminen epäonnistui
-@app.route("/login/bad", methods=["POST", "GET"])
-def loginbad():
-	return render_template("loginbad.html")
+			return render_template("login.html", error = "Väärä salasana")
 
 #logout: Toteuttaa uloskirjautumisen
 @app.route("/logout", methods=["POST"])

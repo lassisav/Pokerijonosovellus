@@ -2,7 +2,6 @@
 
  - Etusivu:					/					Tehty, testattu  
  - Sisäänkirjautuminen:				/login					Tehty, testattu  
- - Kirjautuminen epäonnistui:			/login/bad				Tehty, testattu
  - Rekisteröinti:				/register				Tehty, testattu  
  - Lista pelisaleista:				/lista					Tehty ja testattu, salikohtainen pöytätilanne puuttuu
  - Pelisalin sivu:				/lista/<salinnimi>			Tehty, testattu
@@ -54,7 +53,6 @@
  - /admin/editUser				editUser.html				Tehty, testattu
  - /login					login.html				Tehty, testattu    
  - /register/success				registersuccess.html			Tehty, testattu 
- - /login/bad					loginbad.html				Tehty, testattu  
  - /lista/poyta/<tableid>			tableid.html				Tehty, testattu
  - /queuefail					queuefail.html				Tehty, testattu
  - /control/arrival/<tableid>			arrival.html				Tehty, testattu
