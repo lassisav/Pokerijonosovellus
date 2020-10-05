@@ -3,7 +3,7 @@
  - Etusivu:					/					Tehty, testattu  
  - Sisäänkirjautuminen:				/login					Tehty, testattu  
  - Kirjautuminen epäonnistui:			/login/bad				Tehty, testattu
- - Rekisteröinti:				/register				Tehty, poislukien salasanan vahvistus -kentän toteutus, testattu  
+ - Rekisteröinti:				/register				Tehty, testattu  
  - Lista pelisaleista:				/lista					Tehty ja testattu, salikohtainen pöytätilanne puuttuu
  - Pelisalin sivu:				/lista/<salinnimi>			Tehty, testattu
  - Kontrollisivu:				/control				Osittain tehty (toiminnot joihin ei kuulu pöytätietojen muokkaaminen), tehdyt toiminnot testattu 
@@ -44,7 +44,7 @@
 *.html-pohjat*  
   
  - /						index.html				Tehty, testattu  
- - /register					register.html				Tehty, posilukien salasanan vahvistus -kentän toteutus, testattu  
+ - /register					register.html				Tehty, testattu  
  - /lista					lista.html				Esiversio tehty ja testattu, joitakin suunniteltuja ominaisuuksia puuttuu  
  - /lista/<salinnimi>				salinnimi.html				Tehty, testattu
  - /control					control.html				Tehty, testattu

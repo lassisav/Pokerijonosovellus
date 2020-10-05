@@ -11,12 +11,17 @@ Tällä sivulla uusi käyttäjä luo tunnuksen
 <input type="submit" value="Kirjaudu ulos">
 </form>
 {% else %}
+{% if error %}
+{{ error }}
+{% endif %}
 <h2>Rekisteröityminen</h2>
 <form action="/register/redirect" method="POST">
 <p>Käyttäjänimi:<br>
 <input type="text" name="reguser"></p>
 <p>Salasana:<br>
 <input type="password" name="regpass"></p>
+<p>Salasana uudelleen:<br>
+<input type="password" name="passcheck"></p>
 <input type="submit" value="Rekisteröidy">
 </form>
 {% endif %}

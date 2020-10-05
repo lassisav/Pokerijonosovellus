@@ -95,8 +95,11 @@ def register():
 def registerredirect():
 	reguser = request.form["reguser"]
 	regpass = request.form["regpass"]
+	passcheck = request.form["passcheck"]
+	if regpass != passcheck:
+		return render_template("register.html", error = "Salasanat eivät täsmää")
 	if not reguser or not regpass:
-		return redirect("/register/emptyfield")
+		return render_template("register.html", error = "Syötä nimi ja salasana")
 	sql1 = "SELECT name FROM users WHERE name=:reguser"
 	result = db.session.execute(sql1, {"reguser":reguser})
 	regu = result.fetchone()
@@ -104,7 +107,7 @@ def registerredirect():
 		hash_value = generate_password_hash(regpass)
 		sql2 = "INSERT INTO users(name,pass,created,status,perms) VALUES(:reguser,:password,LOCALTIMESTAMP,3,'luser')"
 		db.session.execute(sql2, {"reguser":reguser,"password":hash_value})
-		db.session.commit();
+		db.session.commit()
 		return redirect("/register/success")
 	else:
 		return redirect("/register/nametaken")
