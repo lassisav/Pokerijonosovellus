@@ -13,9 +13,6 @@
  - Ylläpitäjä, salin poisto:			/admin/removeLocation			Tehty, testattu
  - Ylläpitjä, käyttäjoikeuksien muokkaaminen	/admin/editUser				Tehty, testattu  
  - Rekisteröinti onnistui:			/register/success			Tehty, testattu  
- - Kirjautuminen epäonnistui:			/login/bad				Tehty, testattu  
- - Jonoon liittyminen:				/lista/poyta/<tableid>			Tehty, testattu
- - Jonossa jo:					/queuefail				Tehty, testattu
  - Saapuvista pöytään:				/control/arrival/<tableid>		Tehty, testattu
  - Ei jonoa siirrettäessä valmistautumaan:	/control/next/fail			Tehty, testattu
 
@@ -36,6 +33,7 @@
  - Ylläpitäjä, salin lisäys:			/admin/addLocation/redirect		Tehty, testattu
  - Ylläpitäjä, salin poisto:			/admin/removeLocation/locationid	Tehty, testattu
  - Ylläpitäjä, käyttäjäoikeuksien muokkaaminen:	/admin/editUser/redirect		Tehty, testattu
+ - Jonoon liittyminen:				/lista/poyta/<tableid>			Tehty, testattu
 
 *.html-pohjat*  
   
@@ -53,8 +51,6 @@
  - /admin/editUser				editUser.html				Tehty, testattu
  - /login					login.html				Tehty, testattu    
  - /register/success				registersuccess.html			Tehty, testattu 
- - /lista/poyta/<tableid>			tableid.html				Tehty, testattu
- - /queuefail					queuefail.html				Tehty, testattu
  - /control/arrival/<tableid>			arrival.html				Tehty, testattu
  - Layout-pohja pelaajille			layout.html				Tehty, testattu
  - Layout-pohja työntekijöille			employeelayout.html			Ei tehty

@@ -156,10 +156,13 @@ def tableid(tableid):
 	sql3 = "SELECT COUNT(*) FROM queue WHERE table_id=:tableid AND inqueue=TRUE"
 	result = db.session.execute(sql3, {"tableid":tableid}).fetchone()
 	place = result[0]
+	place = str(place)
 	sql4 = "SELECT name FROM tables WHERE id=:tableid"
 	result = db.session.execute(sql4, {"tableid":tableid}).fetchone()
 	tablename = result[0]
-	return render_template("tableid.html", name=name, tablename=tablename, place=place)
+	saliote = db.session.execute("SELECT L.name, (SELECT COUNT(*) FROM tables AS T WHERE T.location_id=L.id AND T.open='t') FROM locations AS L")
+	salit = saliote.fetchall()
+	return render_template("lista.html", salit=salit, error="Olet jonossa pöytään " + tablename + " sijalla: " + place)
 
 #control: Työntekijän käyttäjäsivu, josta työntekijä voi hallinoida pöytiä ja jonoja
 #TODO: Lista työntekijän hallinnassa olevista pöydistä
