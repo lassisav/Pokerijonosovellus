@@ -110,12 +110,7 @@ def registerredirect():
 		db.session.commit()
 		return redirect("/register/success")
 	else:
-		return redirect("/register/nametaken")
-
-#register/nametaken: Sivu, jonne käyttäjä ohjautuu yrittäessään rekisteröidä käytössä olevaa käyttäjänimeä
-@app.route("/register/nametaken", methods=["GET","POST"])
-def nametaken():
-	return render_template("nametaken.html")
+		return render_template("register.html", error = "Käyttäjänimi on jo käytössä")
 
 #register/success: Ilmoittaa käyttäjälle rekisteröinnin onnistumisesta
 @app.route("/register/success", methods=["GET","POST"])

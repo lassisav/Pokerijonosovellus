@@ -12,9 +12,7 @@
  - Ylläpitäjä, käyttäjän poisto:		/admin/removeUser			Tehty, testattu
  - Ylläpitäjä, salin lisäys:			/admin/addLocation			Tehty, testattu
  - Ylläpitäjä, salin poisto:			/admin/removeLocation			Tehty, testattu
- - Ylläpitjä, käyttäjoikeuksien muokkaaminen	/admin/editUser				Tehty, testattu
- - Tyhjä nimi tai salasana:			/register/emptyfield			Tehty, testattu
- - Käyttäjänimi käytössä:			/register/nametaken			Tehty, testattu  
+ - Ylläpitjä, käyttäjoikeuksien muokkaaminen	/admin/editUser				Tehty, testattu  
  - Rekisteröinti onnistui:			/register/success			Tehty, testattu  
  - Kirjautuminen epäonnistui:			/login/bad				Tehty, testattu  
  - Jonoon liittyminen:				/lista/poyta/<tableid>			Tehty, testattu
@@ -54,8 +52,7 @@
  - /admin/addLocation				addLocation.html			Tehty, testattu
  - /admin/removeLocation			removeLocation.html			Tehty, testattu
  - /admin/editUser				editUser.html				Tehty, testattu
- - /login					login.html				Tehty, testattu  
- - /register/nametaken				nametaken.html				Tehty, testattu  
+ - /login					login.html				Tehty, testattu    
  - /register/success				registersuccess.html			Tehty, testattu 
  - /login/bad					loginbad.html				Tehty, testattu  
  - /lista/poyta/<tableid>			tableid.html				Tehty, testattu
