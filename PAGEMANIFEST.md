@@ -18,7 +18,6 @@
  - Rekisteröinti onnistui:			/register/success			Tehty, testattu  
  - Kirjautuminen epäonnistui:			/login/bad				Tehty, testattu  
  - Jonoon liittyminen:				/lista/poyta/<tableid>			Tehty, testattu
- - Tyhjä kenttä:				/register/emptyfield			Tehty, testattu
  - Jonossa jo:					/queuefail				Tehty, testattu
  - Saapuvista pöytään:				/control/arrival/<tableid>		Tehty, testattu
  - Ei jonoa siirrettäessä valmistautumaan:	/control/next/fail			Tehty, testattu
@@ -60,7 +59,6 @@
  - /register/success				registersuccess.html			Tehty, testattu 
  - /login/bad					loginbad.html				Tehty, testattu  
  - /lista/poyta/<tableid>			tableid.html				Tehty, testattu
- - /register/emptyfield				emptyfield.html				Tehty, testattu
  - /queuefail					queuefail.html				Tehty, testattu
  - /control/arrival/<tableid>			arrival.html				Tehty, testattu
  - Layout-pohja pelaajille			layout.html				Tehty, testattu

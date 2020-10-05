@@ -117,11 +117,6 @@ def registerredirect():
 def nametaken():
 	return render_template("nametaken.html")
 
-#register/emptyfield: Sivu, jonne käyttäjä ohjautuu jos käyttäjänimi tai salasana-kenttä on tyhjä
-@app.route("/register/emptyfield")
-def emptyfield():
-	return render_template("emptyfield.html")
-
 #register/success: Ilmoittaa käyttäjälle rekisteröinnin onnistumisesta
 @app.route("/register/success", methods=["GET","POST"])
 def registersuccess():
