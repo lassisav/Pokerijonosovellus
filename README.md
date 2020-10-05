@@ -41,6 +41,7 @@
  - Pöydässä olevien pelaajien määrän päivittäminen
  - Jonottajien tietojen näyttäminen työntekijälle kontrollisivulta
  - Työntekijän toiminto siirtää käyttäjiä jonosta valmistautumaan ja valmistautumasta pöytään
+ - Ylläpitäjän toiminnot (pl. jonojen ja liittymisien tyhjennys)
 
 *Sovellukseen toteutettavat, vielä puuttuvat ominaisuudet*
 
@@ -48,7 +49,6 @@
  - Liittymään pääsyn näyttäminen käyttäjälle
  - Käyttäjän omaehtoinen poistuminen jonoista
  - Työntekijän toiminto poistaa ja muokata pöytiä
- - Ylläpitäjän toiminnot
 
 *Etusivu*
 
@@ -85,4 +85,6 @@
 
  - Ylläpitäjä voi lisätä ja poistaa käyttäjiä, työntekijöitä ja ylläpitäjiä
  - Ylläpitäjä voi lisätä ja poistaa pelisaleja
+ - Ylläpitäjä voi muokata työntekijöiden oikeuksia
  - Ylläpitäjä voi käyttää kaikkien pelisalien kontrollisivuja
+ - Ylläpitäjä voi tyhjentää jonot ja liittymiset, jos niissä ei ole yhtään käyttäjää aktiivisena
