@@ -141,13 +141,15 @@ def tableid(tableid):
 	sqlx = "SELECT * FROM queue WHERE (user_id=:userid AND table_id=:tableid) AND inqueue='t'"
 	result = db.session.execute(sqlx, {"userid":userid,"tableid":tableid}).fetchone()
 	if not result == None:
-		print(result)
-		return redirect("/queuefail")
+		saliote = db.session.execute("SELECT L.name, (SELECT COUNT(*) FROM tables AS T WHERE T.location_id=L.id AND T.open='t') FROM locations AS L")
+		salit = saliote.fetchall()
+		return render_template("lista.html", salit=salit, error="Olet jo jonossa valitsemaasi pöytään")
 	sqly = "SELECT * FROM joiners WHERE (user_id=:userid AND table_id=:tableid) AND tojoin='t'"
 	result = db.session.execute(sqly, {"userid":userid,"tableid":tableid}).fetchone()
 	if not result == None:
-		print(result)
-		return redirect("/queuefail")
+		saliote = db.session.execute("SELECT L.name, (SELECT COUNT(*) FROM tables AS T WHERE T.location_id=L.id AND T.open='t') FROM locations AS L")
+		salit = saliote.fetchall()
+		return render_template("lista.html", salit=salit, error="Sinulle on jo paikka valitsemaasi pöytään")
 	sql2 = "INSERT INTO queue(user_id,table_id,inqueue,arrived) VALUES(:userid,:tableid,TRUE,LOCALTIMESTAMP)"
 	db.session.execute(sql2, {"userid":userid,"tableid":tableid})
 	db.session.commit();
@@ -158,11 +160,6 @@ def tableid(tableid):
 	result = db.session.execute(sql4, {"tableid":tableid}).fetchone()
 	tablename = result[0]
 	return render_template("tableid.html", name=name, tablename=tablename, place=place)
-
-#queuefail: Käyttäjä päätyy sivulle, jos hän on jo jonossa pöytään, jonka jonoon hän yrittää liittyä
-@app.route("/queuefail")
-def queuefail():
-	return render_template("queuefail.html")
 
 #control: Työntekijän käyttäjäsivu, josta työntekijä voi hallinoida pöytiä ja jonoja
 #TODO: Lista työntekijän hallinnassa olevista pöydistä
