@@ -9,7 +9,7 @@
 *Ohjeet vertaisarviontiin*
 
  - Sovellukseen on luotu työntekijätoimintojen testaamista varten käyttäjä, jonka käyttäjänimi on essi, salasana esimerkki
- - Admin-toimintojen testaukseen ei ole olemassa testikäyttäjää, sillä admintoimintoja ei ole vielä toteutettu
+ - Sovellukseen on luotu ylläpitäjätoimintojen testaamista varten käyttäjä, jonka käyttäjänimi on admin, salasana salasana
  - Työntekijäkäyttäjille ei ole (vielä) helppokäyttöistä tapaa liikkua työntekijäsivujen ja käyttäjäsivujen välillä, joten testataksesi työntekijätoimintoja kirjaudu sisään ja sen jälkeen siirry sivulle /control
 
 *Sovelluksen tarkoitus*
