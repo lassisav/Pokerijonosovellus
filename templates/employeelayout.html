@@ -1,0 +1,20 @@
+<!doctype html>
+<title>Pokerijonosovellus - Työntekijä</title>
+<h1>Pokerijonosovellus - Työntekijä</h1>
+{% if msg != "nothingtoseehere" %}
+	{{ msg }}<br>
+{% endif %}
+<p>Olet kirjautunut nimellä {{session.username}}</p>
+<form action="/control" method="GET">
+<input type="submit" value="Siirry pöytälistaan">
+</form>
+<form action="/logout" method="POST">
+<input type="submit" value="Kirjaudu ulos">
+</form>
+<hr>
+{% block content %}{% endblock %}
+<hr>
+Tämä sovellus on Helsingin Yliopiston Tietokantasovellus-harjoitustyökurssilla tehty projektityö.<br>
+Sovellusta ei ole tehty yhteistyössä minkään pokeripalveluja tarjoavan yhteisön kanssa. <br>
+Sovelluksen ja sitä varten luotujen osien kaupallinen käyttö kielletty. <br>
+&copy; Lassi Savolainen, fil.yo, Helsingin yliopisto, 2020

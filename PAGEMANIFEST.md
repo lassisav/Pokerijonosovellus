@@ -3,7 +3,7 @@
  - Etusivu:					/					Tehty, testattu  
  - Sisäänkirjautuminen:				/login					Tehty, testattu  
  - Rekisteröinti:				/register				Tehty, testattu  
- - Lista pelisaleista:				/lista					Tehty ja testattu, salikohtainen pöytätilanne puuttuu
+ - Lista pelisaleista:				/lista					Tehty ja testattu
  - Pelisalin sivu:				/lista/<salinnimi>			Tehty, testattu
  - Kontrollisivu:				/control				Osittain tehty (toiminnot joihin ei kuulu pöytätietojen muokkaaminen), tehdyt toiminnot testattu 
  - Ylläpitosivu:				/admin					Tehty, testattu
@@ -14,7 +14,6 @@
  - Ylläpitjä, käyttäjoikeuksien muokkaaminen	/admin/editUser				Tehty, testattu  
  - Rekisteröinti onnistui:			/register/success			Tehty, testattu  
  - Saapuvista pöytään:				/control/arrival/<tableid>		Tehty, testattu
- - Ei jonoa siirrettäessä valmistautumaan:	/control/next/fail			Tehty, testattu
 
 *Redirect-sivut*  
   
@@ -39,7 +38,7 @@
   
  - /						index.html				Tehty, testattu  
  - /register					register.html				Tehty, testattu  
- - /lista					lista.html				Esiversio tehty ja testattu, joitakin suunniteltuja ominaisuuksia puuttuu  
+ - /lista					lista.html				Tehty, testattu  
  - /lista/<salinnimi>				salinnimi.html				Tehty, testattu
  - /control					control.html				Tehty, testattu
  - /control					nopermission.html			Tehty, testattu  
@@ -53,5 +52,5 @@
  - /register/success				registersuccess.html			Tehty, testattu 
  - /control/arrival/<tableid>			arrival.html				Tehty, testattu
  - Layout-pohja pelaajille			layout.html				Tehty, testattu
- - Layout-pohja työntekijöille			employeelayout.html			Ei tehty
+ - Layout-pohja työntekijöille			employeelayout.html			Pohja tehty, ei liitetty sivuihin
  - Layout-pohja ylläpitäjille			adminlayout.html			Tehty, testattu, poislukien control-sivuston implementaatio

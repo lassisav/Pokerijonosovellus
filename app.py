@@ -216,6 +216,7 @@ def jointable(tableid):
 		sql = "UPDATE tables SET players=players+1 WHERE id=:tableid"
 		db.session.execute(sql, {"tableid":tableid})
 		db.session.commit()
+		session["message"] = "Pelaaja lisätty"
 	return redirect("/control")
 
 #control/remove/tableid: Toteuttaa pelaajan poistamisen pöydästä
@@ -237,6 +238,7 @@ def removefromtable(tableid):
 		sql = "UPDATE tables SET players=players-1 WHERE id=:tableid"
 		db.session.execute(sql, {"tableid":tableid})
 		db.session.commit()
+		session["message"] = "Pelaaja poistettiin"
 	return redirect("/control")
 
 #control/open/tableid: Toteuttaa pöydän avaamisen
@@ -252,6 +254,7 @@ def opentable(tableid):
 	sql = "UPDATE tables SET open='t' WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
+	session["message"] = "Pöytä avattu"
 	return redirect("/control")
 
 #control/close/tableid: Toteuttaa pöydän sulkemisen
@@ -267,6 +270,7 @@ def closetable(tableid):
 	sql = "UPDATE tables SET open='f' WHERE id=:tableid"
 	db.session.execute(sql, {"tableid":tableid})
 	db.session.commit()
+	session["message"] = "Pöytä suljettu"
 	return redirect("/control")
 
 #control/next/tableid: Toteuttaa pelaajan siirron jonosta liittymään
@@ -353,7 +357,7 @@ def arrival(tableid):
 	else:
 		sql = "SELECT U.name,J.id FROM joiners AS J LEFT OUTER JOIN users AS U ON (J.user_id=U.id) WHERE J.table_id=:tableid AND tojoin='t'"
 		nimilista = db.session.execute(sql, {"tableid":tableid}).fetchall()
-		return render_template("arrival.html", nimilista=nimilista)
+		return render_template("arrival.html", nimilista=nimilista, msg="Valitse siirrettävä pelaaja")
 
 #control/arrival/add/tableid: Toteuttaa listasta valitun pelaajan siirtämisen pöytään
 @app.route("/control/arrival/add/<string:joinid>", methods=["GET","POST"])
