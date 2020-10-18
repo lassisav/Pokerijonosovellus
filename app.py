@@ -65,9 +65,12 @@ def loginredirect():
 			#Oikea tunnus ja salasana
 			session["username"] = username
 			session["message"] = "nothingtoseehere"
+			session["per"]="luser"
 			if onkoAdmin():
+				session["per"]="admin"
 				return redirect("/admin")
 			if onkoTyontekija():
+				session["per"]="emplo"
 				return redirect("/control")
 			return redirect("/lista")
 		else:

@@ -1,6 +1,9 @@
-{% if msg != "nothingtoseehere" %}
-	{{ msg }}<br>
+{% if session.per == "admin" %}
+{% extends "adminlayout.html" %}
+{% else %}
+{% extends "employeelayout.html" %}
 {% endif %}
+{% block content %}
 {% for p in poytalista %}
 {% if p[5] is not true %}
 	{{ p[1] }}: Kiinni<br>
@@ -51,3 +54,4 @@
 	</form>
 {% endif %}
 {% endfor %}
+{% endblock %}
