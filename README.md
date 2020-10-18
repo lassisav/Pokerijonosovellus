@@ -64,7 +64,6 @@
 
 *Pelisalin oma sivu*
 
- - Salin sivulla käyttäjä näkee tarkemmat tiedot kustakin pöydästä (Peli, panostaso, senhetkinen ja maksimipelaajamäärä, jonon pituus)
  - Salin sivulla pöytää klikkaamalla käyttäjä ilmoittautuu jonoon
  - Jonossa olevat käyttäjät näkevät jonotustilanteensa sovelluksen jokaisella sivulla
 

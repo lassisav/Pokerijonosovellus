@@ -3,7 +3,7 @@
  - Etusivu:					/					Tehty, testattu  
  - Sisäänkirjautuminen:				/login					Tehty, testattu  
  - Rekisteröinti:				/register				Tehty, testattu  
- - Lista pelisaleista:				/lista					Tehty ja testattu
+ - Lista pelisaleista:				/lista					Tehty, testattu
  - Pelisalin sivu:				/lista/<salinnimi>			Tehty, testattu
  - Kontrollisivu:				/control				Osittain tehty (toiminnot joihin ei kuulu pöytätietojen muokkaaminen), tehdyt toiminnot testattu 
  - Ylläpitosivu:				/admin					Tehty, testattu
@@ -52,5 +52,5 @@
  - /register/success				registersuccess.html			Tehty, testattu 
  - /control/arrival/<tableid>			arrival.html				Tehty, testattu
  - Layout-pohja pelaajille			layout.html				Tehty, testattu
- - Layout-pohja työntekijöille			employeelayout.html			Pohja tehty, ei liitetty sivuihin
- - Layout-pohja ylläpitäjille			adminlayout.html			Tehty, testattu, poislukien control-sivuston implementaatio
+ - Layout-pohja työntekijöille			employeelayout.html			Tehty, testattu
+ - Layout-pohja ylläpitäjille			adminlayout.html			Tehty, testattu
