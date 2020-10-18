@@ -2,5 +2,11 @@
 Etusivu:
 Etusivulta voi kirjautua sisään tai rekisteröityä.
 -->
+{% if session.per=="admin" %}
+{% extends "adminlayout.html" %}
+{% elif session.per=="emplo" %}
+{% extends "employeelayout.html" %}
+{% else %}
 {% extends "layout.html" %}
 {% block title %}Etusivu{% endblock %}
+{% endif %}

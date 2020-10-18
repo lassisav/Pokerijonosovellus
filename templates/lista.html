@@ -1,8 +1,14 @@
 <!--
 Listasivulta käyttäjä näkee pelisalit, ja voi siirtyä pelisalikohtaisille sivuille
 -->
+{% if session.per=="admin" %}
+{% extends "adminlayout.html" %}
+{% elif session.per=="emplo" %}
+{% extends "emplolayout.html" %}
+{% else %}
 {% extends "layout.html" %}
 {% block title %}Etusivu{% endblock %}
+{% endif %}
 {% block content %}
 {% if error %}
 {{ error }}

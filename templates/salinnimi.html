@@ -1,5 +1,11 @@
+{% if session.per=="admin" %}
+{% extends "adminlayout.html" %}
+{% elif session.per=="emplo" %}
+{% extends "employeelayout.html" %}
+{% else %}
 {% extends "layout.html" %}
 {% block title %}{{ salinnimi }}{% endblock %}
+{% endif %}
 {% block content %}
 <br>
 {% for p in poytalista %}
