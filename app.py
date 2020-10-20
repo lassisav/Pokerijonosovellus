@@ -34,6 +34,29 @@ def onkoTyontekija():
 			return True
 	return False
 
+#liityTilanne: Funktio, joka hakee pöydät joihin pelaaja on liittymässä
+def liityTilanne():
+	name = session.get("username")
+	if name == None:
+		return tuple()
+	sql1 = "SELECT id FROM users WHERE name=:name"
+	result = db.session.execute(sql1, {"name":name}).fetchone()
+	userid = result[0]
+	sql2 = "SELECT T.name, T.game, T.betsize FROM joiners AS J LEFT OUTER JOIN tables AS T ON J.table_id=T.id WHERE J.user_id=:userid AND tojoin='t'"
+	liityLista = db.session.execute(sql2, {"userid":userid}).fetchall()
+	return liityLista
+
+#jonoTilanne: Funktio, joka hakee pöydät joihin pelaaja on jonossa
+def jonoTilanne():
+	name = session.get("username")
+	if name == None:
+		return tuple()
+	sql1 = "SELECT id FROM users WHERE name=:name"
+	result = db.session.execute(sql1, {"name":name}).fetchone()
+	userid = result[0]
+	sql2 = "SELECT T.name, T.game, T.betsize FROM queue AS Q LEFT OUTER JOIN tables AS T ON Q.table_id=T.id WHERE Q.user_id=:userid AND inqueue='t'"
+	jonoLista = db.session.execute(sql2, {"userid":userid}).fetchall()
+	return jonoLista
 
 #SIVUT:
 
@@ -41,16 +64,22 @@ def onkoTyontekija():
 #Etusivu: Etusivulta siirrytään sisäänkirjautumiseen tai rekisteröitymiseen.
 @app.route("/", methods=["GET", "POST"])
 def index():
-	return render_template("index.html")
+	liityLista = liityTilanne()
+	jonoLista = jonoTilanne()
+	return render_template("index.html", jonoLista=jonoLista, liityLista=liityLista)
 
 #Sisäänkirjautuminen: Käytetään sisäänkirjautumiseen
 @app.route("/login", methods=["GET", "POST"])
 def login():
-	return render_template("login.html")
+	liityLista = liityTilanne()
+	jonoLista = jonoTilanne()
+	return render_template("login.html", jonoLista=jonoLista, liityLista=liityLista)
 
 #login/redirect: Toteuttaa sisäänkirjautumisen
 @app.route("/login/redirect", methods=["POST"])
 def loginredirect():
+	liityLista = liityTilanne()
+	jonoLista = jonoTilanne()
 	username = request.form["username"]
 	password = request.form["password"]
 	sql = "SELECT pass FROM users WHERE name=:username"
@@ -58,7 +87,7 @@ def loginredirect():
 	ps = result.fetchone()
 	if ps == None:
 		#Tunnusta ei ole
-		return render_template("login.html", error = "Tunnusta ei ole")
+		return render_template("login.html", error = "Tunnusta ei ole", liityLista=liityLista, jonoLista=jonoLista)
 	else:
 		hash_value = ps[0]
 		if check_password_hash(hash_value, password):
@@ -75,29 +104,34 @@ def loginredirect():
 			return redirect("/lista")
 		else:
 			#Väärä salasana
-			return render_template("login.html", error = "Väärä salasana")
+			return render_template("login.html", error = "Väärä salasana", liityLista=liityLista, jonoLista=jonoLista)
 
 #logout: Toteuttaa uloskirjautumisen
 @app.route("/logout", methods=["POST"])
 def logout():
 	del session["username"]
+	del session["per"]
 	return redirect("/")
 
 #Rekisteröityminen: Tällä sivulla käyttäjä syöttää tunnuksen ja salasanan rekisteröitymistä varten
 @app.route("/register", methods=["GET", "POST"])
 def register():
-	return render_template("register.html")
+	liityLista = liityTilanne()
+	jonoLista = jonoTilanne()
+	return render_template("register.html", liityLista=liityLista, jonoLista=jonoLista)
 
 #register/redirect: Toteuttaa rekisteröitymisen
 @app.route("/register/redirect", methods=["GET","POST"])
 def registerredirect():
+	liityLista = liityTilanne()
+	jonoLista = jonoTilanne()
 	reguser = request.form["reguser"]
 	regpass = request.form["regpass"]
 	passcheck = request.form["passcheck"]
 	if regpass != passcheck:
-		return render_template("register.html", error = "Salasanat eivät täsmää")
+		return render_template("register.html", error = "Salasanat eivät täsmää", liityLista=liityLista, jonoLista=jonoLista)
 	if not reguser or not regpass:
-		return render_template("register.html", error = "Syötä nimi ja salasana")
+		return render_template("register.html", error = "Syötä nimi ja salasana", liityLista=liityLista, jonoLista=jonoLista)
 	sql1 = "SELECT name FROM users WHERE name=:reguser"
 	result = db.session.execute(sql1, {"reguser":reguser})
 	regu = result.fetchone()
@@ -108,20 +142,24 @@ def registerredirect():
 		db.session.commit()
 		return redirect("/register/success")
 	else:
-		return render_template("register.html", error = "Käyttäjänimi on jo käytössä")
+		return render_template("register.html", error = "Käyttäjänimi on jo käytössä", liityLista=liityLista, jonoLista=jonoLista)
 
 #register/success: Ilmoittaa käyttäjälle rekisteröinnin onnistumisesta
 @app.route("/register/success", methods=["GET","POST"])
 def registersuccess():
-	return render_template("registersuccess.html")
+	liityLista = liityTilanne()
+	jonoLista = jonoTilanne()
+	return render_template("registersuccess.html", liityLista=liityLista, jonoLista=jonoTilanne)
 
 #Lista: Sisältää listan pelisaleista, klikkaamalla salia pääsee salin sivulle
 #TODO: Kaikki, sivu tällä hetkellä placeholder
 @app.route("/lista", methods=["GET","POST"])
 def lista():
+	liityLista = liityTilanne()
+	jonoLista = jonoTilanne()
 	saliote = db.session.execute("SELECT L.name, (SELECT COUNT(*) FROM tables AS T WHERE T.location_id=L.id AND T.open='t') FROM locations AS L")
 	salit = saliote.fetchall()
-	return render_template("lista.html", salit=salit)
+	return render_template("lista.html", salit=salit, liityLista=liityLista, jonoLista=jonoLista)
 
 #Salisivu: Näyttää käyttäjälle salissa olevat pöydät, käyttäjä voi tästä liittyä pöydän jonoon
 @app.route("/lista/<string:salinnimi>", methods =["GET","POST"])
@@ -132,11 +170,15 @@ def salinnimi(salinnimi):
 	sql2 = "SELECT T.id,T.name,T.game,T.betsize,T.players,T.seattotal,(SELECT COUNT(Q.id) FROM queue AS Q WHERE Q.table_id=T.id AND Q.inqueue = TRUE) FROM tables AS T WHERE T.location_id=:salid ORDER BY T.id"
 	resu2 = db.session.execute(sql2, {"salid":salid})
 	poytalista = resu2.fetchall()
-	return render_template("salinnimi.html", salinnimi=salinnimi, poytalista=poytalista)
+	liityLista = liityTilanne()
+	jonoLista = jonoTilanne()
+	return render_template("salinnimi.html", salinnimi=salinnimi, poytalista=poytalista, liityLista=liityLista, jonoLista=jonoLista)
 
 #lista/table_id: Toteuttaa liittymisen
 @app.route("/lista/poyta/<string:tableid>", methods =["GET","POST"])
 def tableid(tableid):
+	liityLista = liityTilanne()
+	jonoLista = jonoTilanne()
 	name = session.get("username")
 	sql = "SELECT id FROM users WHERE name=:name"
 	result = db.session.execute(sql, {"name":name}).fetchone()
@@ -146,13 +188,13 @@ def tableid(tableid):
 	if not result == None:
 		saliote = db.session.execute("SELECT L.name, (SELECT COUNT(*) FROM tables AS T WHERE T.location_id=L.id AND T.open='t') FROM locations AS L")
 		salit = saliote.fetchall()
-		return render_template("lista.html", salit=salit, error="Olet jo jonossa valitsemaasi pöytään")
+		return render_template("lista.html", salit=salit, error="Olet jo jonossa valitsemaasi pöytään", liityLista=liityLista, jonoLista=jonoLista)
 	sqly = "SELECT * FROM joiners WHERE (user_id=:userid AND table_id=:tableid) AND tojoin='t'"
 	result = db.session.execute(sqly, {"userid":userid,"tableid":tableid}).fetchone()
 	if not result == None:
 		saliote = db.session.execute("SELECT L.name, (SELECT COUNT(*) FROM tables AS T WHERE T.location_id=L.id AND T.open='t') FROM locations AS L")
 		salit = saliote.fetchall()
-		return render_template("lista.html", salit=salit, error="Sinulle on jo paikka valitsemaasi pöytään")
+		return render_template("lista.html", salit=salit, error="Sinulle on jo paikka valitsemaasi pöytään", liityLista=liityLista, jonoLista=jonoLista)
 	sql2 = "INSERT INTO queue(user_id,table_id,inqueue,arrived) VALUES(:userid,:tableid,TRUE,LOCALTIMESTAMP)"
 	db.session.execute(sql2, {"userid":userid,"tableid":tableid})
 	db.session.commit();
@@ -165,7 +207,8 @@ def tableid(tableid):
 	tablename = result[0]
 	saliote = db.session.execute("SELECT L.name, (SELECT COUNT(*) FROM tables AS T WHERE T.location_id=L.id AND T.open='t') FROM locations AS L")
 	salit = saliote.fetchall()
-	return render_template("lista.html", salit=salit, error="Olet jonossa pöytään " + tablename + " sijalla: " + place)
+	jonoLista = jonoTilanne()
+	return render_template("lista.html", salit=salit, error="Olet jonossa pöytään " + tablename + " sijalla: " + place, liityLista=liityLista, jonoLista=jonoLista)
 
 #control: Työntekijän käyttäjäsivu, josta työntekijä voi hallinoida pöytiä ja jonoja
 #TODO: Lista työntekijän hallinnassa olevista pöydistä

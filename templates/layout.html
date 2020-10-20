@@ -2,13 +2,24 @@
 <title> Pokerijonosovellus - {% block title %}{% endblock %}</title>
 <h1>Pokerijonosovellus</h1>
 {% if session.username %}
-<p>Olet kirjautunut nimellä {{session.username}}</p>
-<form action="/lista" method="POST">
-<input type="submit" value="Lista pelisaleista">
-</form>
-<form action="/logout" method="POST">
-<input type="submit" value="Kirjaudu ulos">
-</form>
+	<p>Olet kirjautunut nimellä {{session.username}}</p>
+	<form action="/lista" method="POST">
+	<input type="submit" value="Lista pelisaleista">
+	</form>
+	<form action="/logout" method="POST">
+	<input type="submit" value="Kirjaudu ulos">
+	</form>
+	{% if liityLista %}
+		Saavu pöytään:<br>
+		{% for l in liityLista %}
+			Sinulle on paikka pöydässä: {{ l[0] }}, {{ l[1] }}, {{ l[2] }}<br>
+		{% endfor %}<br>
+	{% endif %}
+	{% if jonoLista %}
+		{% for j in jonoLista %}
+			Olet jonossa pöytään: {{ j[0] }}, {{ j[1] }}, {{ j[2] }}<br>
+		{% endfor %}
+	{% endif %}
 {% else %}
 <p>Et ole kirjautunut sisään</p>
 <form action="/login" method="POST">
