@@ -42,13 +42,11 @@
  - Jonottajien tietojen näyttäminen työntekijälle kontrollisivulta
  - Työntekijän toiminto siirtää käyttäjiä jonosta valmistautumaan ja valmistautumasta pöytään
  - Ylläpitäjän toiminnot (pl. jonojen ja liittymisien tyhjennys)
+ - Käyttäjän jono- ja liittymistilanteen näyttäminen
 
 *Sovellukseen toteutettavat, vielä puuttuvat ominaisuudet*
 
- - Jonosijan näyttäminen käyttäjälle sovelluksessa
- - Liittymään pääsyn näyttäminen käyttäjälle
  - Käyttäjän omaehtoinen poistuminen jonoista
- - Työntekijän toiminto poistaa ja muokata pöytiä
 
 *Etusivu*
 
